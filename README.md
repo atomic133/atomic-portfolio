@@ -3,72 +3,93 @@
 
 > **انا عملته بالذكاء الاسطناعي لو حد عايز يخده و يعدل عليه براحتوا**
 > 
-> *Created with AI — feel free to take it, fork it, and modify it however you like.*
+> *Created with AI — feel free to fork, clone, and modify it however you like.*
 
 ---
 
-## ⚡ Quick Deploy to Vercel
+## 📖 نظرة عامة على المشروع (Project Overview)
 
-### Method 1: Git Integration (Recommended)
-1. Push this repository to GitHub or GitLab:
-   ```bash
-   git init
-   git add .
-   git commit -m "feat: complete atomic developer portfolio"
-   git branch -M main
-   git remote add origin https://github.com/atomic133/atomic-portfolio.git
-   git push -u origin main
-   ```
-2. Navigate to [vercel.com/new](https://vercel.com/new).
-3. Import the repository.
-4. Leave **Build Command** and **Output Directory** default (this is a static zero-build deployment).
-5. Click **Deploy**.
-
-### Method 2: Vercel CLI
-Run directly from the project root:
-```bash
-# Preview deployment
-npx vercel
-
-# Production deployment
-npx vercel --prod
-```
+موقع بورتفوليو شخصي واحترافي مصمم خصيصاً لمطوري سيرفرات ماين كرافت (Minecraft Plugins & Core Systems) ومطوري بوتات ديسكورد (Discord Bots). يتميز البورتفوليو بتصميم داكن فاخر (Obsidian Dark Theme) مع تأثيرات بصرية حركية، ونظام لوحات تحكم تفاعلية (Bento Grid)، وهوت بار ماين كرافت تفاعلي في أسفل الشاشة، ومؤثرات صوتية تم توليدها بالكامل باستخدام Web Audio API بدون أي ملفات خارجية.
 
 ---
 
-## 📁 Architecture & File Layout
+## 💻 اللغات والتقنيات المستخدمة (Tech Stack)
+
+تم بناء الموقع بنظام **Zero-Dependencies** لضمان أقصى سرعة تحميل وأعلى أداء:
+
+1. **HTML5:**
+   - هيكلة دلالية متكاملة (Semantic HTML5).
+   - متوافق مع معايير محركات البحث (SEO) مع وجود `robots.txt` و `sitemap.xml` وبيانات OpenGraph و Twitter Cards.
+
+2. **Vanilla CSS3:**
+   - تصميم متجاوب 100% يعمل بسلاسة على الهواتف والأجهزة اللوحية والشاشات العريضة.
+   - نظام ألوان مستوحى من عالم ماين كرافت الليلي: حجر السج المطفي (`#060509`)، والبنفسجي الداكن (`#8b5cf6`)، والذهبي الملكي (`#d97706`).
+   - تأثيرات الزجاج المعتم (Glassmorphism) بدون تشويش على سلاسة الفريمات (GPU accelerated).
+
+3. **Modern JavaScript (ES6+):**
+   - رسم متحرك لخلفية فلكية تفاعلية عبر عنصر الـ Canvas (`#fxCanvas`).
+   - رادار تفاعلي ومحاكاة لنبض البوتات وشبكة السيرفرات عبر Canvas منفصل (`#discordScope`).
+   - نظام توليد أصوات رقمية نقية 8-bit ومؤثرات نقر عبر الـ `AudioContext` بدون استهلاك مساحة أو انتظار تحميل ملفات mp3.
+   - نسخ فوري لحسابات الديسكورد والإيميل بنقرة واحدة مع إشعار تفاعلي فوري.
+
+---
+
+## 🛠️ كيفية التعديل والاستخدام (How to Use & Customize)
+
+المشروع مفتوح المصدر بالكامل ومتاح للجميع:
+
+1. **تعديل بياناتك وحساباتك:**
+   - افتح ملف `index.html` وابحث عن قسم التواصل (Contact Section):
+     - غيّر حساب الديسكورد (مثلاً `ATOMIC_oDEV`).
+     - غيّر البريد الإلكتروني (مثلاً `atomicstore7717@gmail.com`).
+     - غيّر رابط الجيت هاب وحساب BuiltByBit.
+   - افتح ملف `main.js` وحدّث قيم الـ Clipboard في دالتي `copyDiscordTag()` و `copyEmail()`.
+
+2. **إضافة أعمالك ومشاريعك:**
+   - في ملف `index.html` ستجد قسم `featured-works` ومكونات الـ `bento-grid`. يمكنك بسهولة استبدال نصوص المشاريع بأسماء إضافاتك وسيرفراتك الخاصة.
+   - يحتوي ملف `discord.html` على صفحة كاملة منفصلة لاستعراض بوتات الديسكورد وخبرات إدارة السيرفرات وصلاحيات المجتمع.
+
+3. **تشغيل الموقع محلياً على جهازك:**
+   - يمكنك ببساطة فتح ملف `index.html` في أي متصفح بالضغط المزدوج عليه.
+   - أو تشغيله عبر خادم محلي:
+     ```bash
+     npx serve .
+     # أو عبر بايثون:
+     python -m http.server 8080
+     ```
+
+---
+
+## ⚡ الرفع على Vercel مجاناً (Deploy to Vercel)
+
+المشروع جاهز فوراً للرفع بدون الحاجة إلى أي أوامر بناء (Zero-Build Static Hosting):
+
+1. قم بعمل Fork أو رفع المستودع على حسابك في GitHub.
+2. ادخل على [vercel.com](https://vercel.com) وسجل الدخول باستخدام GitHub.
+3. اضغط على **Add New Project** واختر هذا المستودع.
+4. اترك الإعدادات الافتراضية كما هي واضغط **Deploy**.
+5. سيتكفل ملف `vercel.json` بتفعيل الروابط النظيفة والأمان وحماية الموقع وإتاحة مسار `/discord` مباشرة بدون `.html`.
+
+---
+
+## 📁 هيكلة الملفات (File Structure)
 
 ```
 .
-├── index.html          # Main Portfolio (Minecraft Systems & Discord Overview)
-├── discord.html        # Dedicated Discord Dev Showcase (Bots & Infrastructure)
-├── style.css           # Vanilla CSS Design System (Custom tokens, glassmorphism, responsive)
-├── main.js             # Canvas telemetry, interactive hotbar, sound synthesis
-├── vercel.json         # Routing rewrites, security headers, clean URLs, and caching
-├── package.json        # Project metadata and local preview scripts
-├── robots.txt          # Search engine crawl directives
-├── sitemap.xml         # XML sitemap for SEO indexation
-├── .vercelignore       # Excludes heavy non-web assets from deployment
-└── .gitignore          # Git exclusion rules
+├── index.html          # الصفحة الرئيسية (بورتفوليو ماين كرافت وأنظمة الديسكورد)
+├── discord.html        # صفحة استعراض بوتات وسيرفرات ديسكورد المتخصصة
+├── style.css           # ملف التنسيقات ونظام التصميم والمتغيرات اللونية
+├── main.js             # كود الأنيميشن والأصوات والرادار والتفاعل
+├── vercel.json         # إعدادات التوجيه والأمان لخدمة Vercel
+├── package.json        # بيانات المشروع
+├── robots.txt          # توجيهات أرشفة محركات البحث
+├── sitemap.xml         # خريطة الموقع لمحركات البحث
+├── .vercelignore       # استبعاد الملفات غير الضرورية عند الرفع
+└── .gitignore          # استبعاد ملفات التطوير من مستودع Git
 ```
 
 ---
 
-## 🌐 Routes
+## 📄 الترخيص (License)
 
-| Route | Destination | Description |
-|---|---|---|
-| `/` | `index.html` | Core portfolio: Hero, Stats, Bento Grid, Works, Tech Stack, Contact |
-| `/discord` | `discord.html` | Discord Bot & Community Infrastructure showcase |
-
----
-
-## 🛡️ Vercel Edge Configuration (`vercel.json`)
-
-- **Clean URLs:** Enabled (`/discord` automatically routes to `discord.html` without trailing `.html`).
-- **Security Headers:**
-  - `X-Content-Type-Options: nosniff`
-  - `X-Frame-Options: DENY`
-  - `X-XSS-Protection: 1; mode=block`
-  - `Referrer-Policy: strict-origin-when-cross-origin`
-- **Cache Optimization:** Immutable long-term caching headers on `style.css` and `main.js`.
+متاح مجاناً ومفتوح المصدر للجميع — يمكنك استخدامه، التعديل عليه، ونشره بحرية كاملة.
