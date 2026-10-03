@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "name": "atomic-odev",
+  "alias": ["atomic-odev.vercel.app"],
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
