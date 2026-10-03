@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://atomic-odev.vercel.app/sitemap.xml
+Sitemap: https://atomicodev.vercel.app/sitemap.xml
