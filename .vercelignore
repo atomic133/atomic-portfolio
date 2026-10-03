@@ -1,0 +1,9 @@
+.agents
+ui-ux-pro-max-skill
+minecraft-plugin
+design-system
+.git
+.github
+*.log
+.DS_Store
+Thumbs.db

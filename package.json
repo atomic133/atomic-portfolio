@@ -1,0 +1,25 @@
+{
+  "name": "atomic-minecraft-portfolio",
+  "version": "1.0.0",
+  "description": "my portoflio",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y serve .",
+    "dev": "npx -y serve .",
+    "build": "echo 'Ready for production deployment'"
+  },
+  "keywords": [
+    "minecraft",
+    "developer",
+    "portfolio",
+    "discord-bot",
+    "paper-spigot",
+    "velocity",
+    "protocollib",
+    "bungee",
+    "jda",
+    "discordjs"
+  ],
+  "author": "ATOMIC",
+  "license": "MIT"
+}

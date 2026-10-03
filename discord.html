@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="atomic-violet">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATOMIC — Discord Bot & Community Server Architect</title>
+  <meta name="description" content="Portfolio of Atomic's Discord development experiences, custom bots (discord.py, discord.js, JDA), and server architecture for Minecraft communities." />
+
+  <meta name="theme-color" content="#060509" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23060509'/><polygon points='8,2 14,8 8,14 2,8' fill='%238b5cf6'/><polygon points='8,5 11,8 8,11 5,8' fill='%23c4b5fd'/></svg>" />
+
+  <!-- Open Graph / SEO Social Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ATOMIC — Discord Bot &amp; Community Server Architect" />
+  <meta property="og:description" content="Custom Discord bots (discord.py, discord.js, JDA 5), Minecraft server bridges, and hardened community setups." />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ATOMIC — Discord Bot &amp; Community Server Architect" />
+  <meta name="twitter:description" content="Custom bots, server infrastructure, and Minecraft integrations." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 1. 16×16 ENCHANTED NETHERITE SWORD CURSOR -->
+  <div id="sword-cursor" aria-hidden="true">
+    <canvas id="swordCanvas" width="16" height="16"></canvas>
+  </div>
+
+  <!-- MINECRAFT LORE TOOLTIP -->
+  <div id="mc-tooltip" role="tooltip" aria-hidden="true">
+    <div class="tt-title" id="tt-title">Netherite Sword</div>
+    <div class="tt-ench" id="tt-ench">Sharpness V</div>
+    <div class="tt-lore" id="tt-lore">Hover over any slot or badge to inspect details.</div>
+  </div>
+
+  <!-- 2. "I... AM... ATOMIC" INTRO OVERLAY -->
+  <div id="atomic-intro" aria-hidden="true">
+    <div class="atomic-chant" id="chantText">I... AM...</div>
+    <div class="atomic-sphere" id="atomicSphere"></div>
+  </div>
+
+  <!-- 3. LIVE BACKGROUND: COSMIC NEBULAE & GEOMETRIC MAGIC ARRAYS -->
+  <div class="bg-world" aria-hidden="true">
+    <div class="bg-glow-orb bg-glow-orb-1"></div>
+    <div class="bg-glow-orb bg-glow-orb-2"></div>
+    <svg class="magic-array" viewBox="0 0 500 500" fill="none" stroke="currentColor" style="color: var(--atomic);">
+      <circle cx="250" cy="250" r="230" stroke-width="1.5" stroke-dasharray="12 6" />
+      <circle cx="250" cy="250" r="210" stroke-width="1" />
+      <polygon points="250,40 432,355 68,355" stroke-width="1.2" />
+      <polygon points="250,460 432,145 68,145" stroke-width="1.2" />
+      <rect x="102" y="102" width="296" height="296" stroke-width="1" transform="rotate(45 250 250)" />
+      <circle cx="250" cy="250" r="95" stroke-width="1.5" stroke-dasharray="4 8" />
+    </svg>
+    <svg class="magic-array-inner" viewBox="0 0 400 400" fill="none" stroke="currentColor" style="color: var(--gold);">
+      <circle cx="200" cy="200" r="180" stroke-width="1" stroke-dasharray="20 10" />
+      <rect x="75" y="75" width="250" height="250" stroke-width="1" />
+      <rect x="75" y="75" width="250" height="250" stroke-width="1" transform="rotate(45 200 200)" />
+    </svg>
+  </div>
+
+  <canvas id="fxCanvas" aria-hidden="true"></canvas>
+
+  <!-- 4. TOP COMMAND BAR -->
+  <header class="top-bar">
+    <div class="sigil">
+      <div class="sigil-gem"></div>
+      <span>ATOMIC // DISCORD EXPERIENCES</span>
+    </div>
+
+    <div class="bar-controls">
+      <a href="index.html" class="mode-btn" style="text-decoration:none;" data-tt="Main Portfolio" data-ench="Navigation" data-lore="Return to Minecraft developer portfolio.">&larr; MAIN PORTFOLIO</a>
+      <button class="mode-btn active" data-theme="atomic-violet" onclick="setMode('atomic-violet')" data-tt="Theme: Shadow Violet" data-ench="Default Palette" data-lore="Muted obsidian, dark violet & weathered gold.">1. Shadow Violet</button>
+      <button class="mode-btn" data-theme="atomic-blue" onclick="setMode('atomic-blue')" data-tt="Theme: Deep Blue" data-ench="Oceanic Slate" data-lore="Dark midnight abyss & atmospheric cyan.">2. Deep Blue</button>
+      <button class="mode-btn" data-theme="blood-moon" onclick="setMode('blood-moon')" data-tt="Theme: Blood Moon" data-ench="Crimson Phase" data-lore="Charcoal black & dark wine rose.">3. Blood Moon</button>
+      <button class="atomic-ult-btn" onclick="castAtomic()" data-tt="Replay Intro" data-ench="Keybind [6]" data-lore="Trigger the full I... AM... ATOMIC sequence.">I AM ATOMIC</button>
+    </div>
+  </header>
+
+  <!-- 5. MAIN CONTENT CONTAINER -->
+  <main class="container">
+
+    <!-- HERO SECTION: DISCORD ARCHITECT OVERVIEW -->
+    <section class="shadow-card tilt-card" aria-label="Discord Architect Hero">
+      <div class="card-body hero-layout">
+        <div>
+          <div class="guild-tag enchanted-glint">
+            <span>DISCORD BOT &amp; COMMUNITY ARCHITECT</span>
+          </div>
+          <h1 class="hero-title">DISCORD DEV</h1>
+          <div class="hero-quote">"Custom bots, server infrastructure, and Minecraft integrations."</div>
+          <p class="hero-desc">
+            Over the past <strong>2+ years</strong>, I've engineered Discord bots and designed full server architectures for Minecraft networks and gaming communities. From <strong>zero-delay two-way in-game chat relays</strong> and <strong>secure account verification</strong> to <strong>automated ticket transcripts</strong> and <strong>anti-nuke security</strong>, I build bots that stay online 24/7 without memory leaks.
+          </p>
+
+          <div class="player-stats-row">
+            <div class="mc-badge enchanted-glint" data-tt="Communities Built" data-ench="18+ Discord Servers" data-lore="Full permissions, categories, channel setups, and onboarding.">
+              <span>SERVERS:</span> <span class="gold">18+ CONFIGURED</span>
+            </div>
+            <div class="mc-badge enchanted-glint" data-tt="Total Audience" data-ench="14,200+ Members" data-lore="Total members served across client & network communities.">
+              <span>REACH:</span> <span class="gold">14,200+ MEMBERS</span>
+            </div>
+            <div class="mc-badge enchanted-glint" data-tt="Bot Stacks" data-ench="4 Main Languages" data-lore="Python (discord.py), JS (discord.js), Java (JDA), Kotlin (Kord).">
+              <span>STACKS:</span> <span class="gold">PYTHON / JS / JDA</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Live Discord Bot Telemetry -->
+        <div class="monitor-panel discord-monitor-panel" data-tt="Live Discord Gateway" data-ench="WebSocket v10" data-lore="Real-time heartbeat ping and gateway telemetry simulation.">
+          <div class="monitor-header">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span class="pulse-dot-discord"></span>
+              <span>GATEWAY HEARTBEAT</span>
+            </div>
+            <span id="gatewayPing" style="color:#5865F2; font-family:'JetBrains Mono',monospace; font-weight:700;">24ms PING</span>
+          </div>
+          <canvas id="discordScope"></canvas>
+          <div class="live-metrics">
+            <div class="metric-cell">
+              <div class="metric-num">99.98%</div>
+              <div class="metric-lbl">BOT UPTIME</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-num">4 STACKS</div>
+              <div class="metric-lbl">FRAMEWORKS</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-num">&lt; 0.05s</div>
+              <div class="metric-lbl">RELAY DELAY</div>
+            </div>
+          </div>
+          <div class="discord-hero-cta" onclick="copyDiscordTag()">
+            <span>COPY DISCORD TAG: ATOMIC_oDEV</span>
+            <span class="external-arrow">&rarr;</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 01 // CUSTOM DISCORD BOTS ENGINEERED -->
+    <div class="sec-head" id="sec-bots">
+      <span class="rune-tag">01</span>
+      <span>CUSTOM DISCORD BOTS ENGINEERED</span>
+      <div class="divider-beam"></div>
+    </div>
+
+    <div class="projects-grid">
+      <!-- Bot 1: AegisLink -->
+      <article class="shadow-card tilt-card" aria-label="AegisLink Bot">
+        <div class="card-body project-card">
+          <div>
+            <div class="project-head">
+              <h3 class="project-name">AegisLink</h3>
+              <span class="project-tag">MINECRAFT-DISCORD BRIDGE</span>
+            </div>
+            <p class="project-desc">
+              Direct JVM-embedded bot written in Java with JDA 5 and Paper API. Handles bidirectional in-game chat to Discord channels with zero tick delay, in-game account linking via secure one-time codes, and live server console streaming to private staff channels.
+            </p>
+            <div class="project-metrics-box">
+              <span>ZERO-TICK EVENT RELAY</span>
+              <span>1-TIME CODE LINKING</span>
+              <span>JAVA 17 + JDA 5</span>
+            </div>
+            <div class="project-tags-row">
+              <span class="mini-badge">JDA 5</span>
+              <span class="mini-badge">PAPER 1.20</span>
+              <span class="mini-badge">ACCOUNT LINK</span>
+              <span class="mini-badge">CONSOLE STREAM</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span style="font-family:'Silkscreen',monospace; font-size:9px; color:var(--dim);">STATUS: ACTIVE DEPLOYMENT</span>
+            <button class="proj-btn" onclick="showToast('AEGISLINK: ZERO-LATENCY JDA BRIDGE')" data-tt="AegisLink" data-ench="Bot Architecture" data-lore="Direct Paper thread sync with thread-safe queue.">
+              <span>VIEW SPECS</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Bot 2: TicketMaster Pro -->
+      <article class="shadow-card tilt-card" aria-label="TicketMaster Pro">
+        <div class="card-body project-card">
+          <div>
+            <div class="project-head">
+              <h3 class="project-name">TicketMaster Pro</h3>
+              <span class="project-tag">SUPPORT SYSTEM</span>
+            </div>
+            <p class="project-desc">
+              Production-ready support bot using discord.js v14 and TypeScript. Features category routing via select menus, dynamic modal input forms, staff claim buttons, and automated HTML transcript generation uploaded to cloud storage when tickets close.
+            </p>
+            <div class="project-metrics-box">
+              <span>SELECT MENUS &amp; MODALS</span>
+              <span>HTML TRANSCRIPTS</span>
+              <span>DISCORD.JS V14 + TS</span>
+            </div>
+            <div class="project-tags-row">
+              <span class="mini-badge">DISCORD.JS</span>
+              <span class="mini-badge">TYPESCRIPT</span>
+              <span class="mini-badge">HTML TRANSCRIPT</span>
+              <span class="mini-badge">COMPONENTS</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span style="font-family:'Silkscreen',monospace; font-size:9px; color:var(--dim);">STATUS: TESTED &amp; PROVEN</span>
+            <button class="proj-btn" onclick="showToast('TICKETMASTER PRO: TS SUPPORT ENGINE')" data-tt="TicketMaster Pro" data-ench="Support Bot" data-lore="Handled 1,800+ player support tickets with full logs.">
+              <span>VIEW SPECS</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Bot 3: SentinelGuard -->
+      <article class="shadow-card tilt-card" aria-label="SentinelGuard Bot">
+        <div class="card-body project-card">
+          <div>
+            <div class="project-head">
+              <h3 class="project-name">SentinelGuard</h3>
+              <span class="project-tag">ANTI-NUKE &amp; SECURITY</span>
+            </div>
+            <p class="project-desc">
+              High-security server protection bot built with Python (discord.py 2.3). Features real-time webhook audit scanning, mass-channel creation detection, regex-based anti-phishing filters, auto-quarantine for suspicious accounts, and instant staff notifications.
+            </p>
+            <div class="project-metrics-box">
+              <span>MASS-ACTION BLOCKER</span>
+              <span>ANTI-PHISHING REGEX</span>
+              <span>PYTHON 3.11 + ASYNC</span>
+            </div>
+            <div class="project-tags-row">
+              <span class="mini-badge">DISCORD.PY</span>
+              <span class="mini-badge">ANTI-NUKE</span>
+              <span class="mini-badge">AUDIT LOGS</span>
+              <span class="mini-badge">AUTO-MOD</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span style="font-family:'Silkscreen',monospace; font-size:9px; color:var(--dim);">STATUS: ACTIVE SHIELD</span>
+            <button class="proj-btn" onclick="showToast('SENTINELGUARD: GUILD DEFENSE BOT')" data-tt="SentinelGuard" data-ench="Security Shield" data-lore="Protected 12+ servers against rogue webhooks and raids.">
+              <span>VIEW SPECS</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Bot 4: NovaEconomy & Tebex Relay -->
+      <article class="shadow-card tilt-card" aria-label="NovaEconomy Bot">
+        <div class="card-body project-card">
+          <div>
+            <div class="project-head">
+              <h3 class="project-name">NovaEconomy</h3>
+              <span class="project-tag">STORE &amp; REWARD RELAY</span>
+            </div>
+            <p class="project-desc">
+              Automated Tebex/Buycraft store webhook consumer that posts customized rich embeds on purchases, automatically applies buyer roles, and communicates with Paper servers via Redis Pub/Sub to credit in-game items instantly.
+            </p>
+            <div class="project-metrics-box">
+              <span>TEBEX WEBHOOKS</span>
+              <span>AUTO ROLE GRANT</span>
+              <span>PYTHON + FASTAPI</span>
+            </div>
+            <div class="project-tags-row">
+              <span class="mini-badge">WEBHOOKS</span>
+              <span class="mini-badge">TEBEX SYNC</span>
+              <span class="mini-badge">REDIS PUB/SUB</span>
+              <span class="mini-badge">FASTAPI</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span style="font-family:'Silkscreen',monospace; font-size:9px; color:var(--dim);">STATUS: PRODUCTION READY</span>
+            <button class="proj-btn" onclick="showToast('NOVAECONOMY: STORE WEBHOOK ENGINE')" data-tt="NovaEconomy" data-ench="Monetization Bot" data-lore="Synced 2,400+ Tebex purchase notifications seamlessly.">
+              <span>VIEW SPECS</span>
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- SECTION 02 // DISCORD SERVER ARCHITECTURE EXPERIENCE -->
+    <div class="sec-head" id="sec-server-builds">
+      <span class="rune-tag">02</span>
+      <span>COMMUNITY &amp; SERVER SETUP EXPERIENCES</span>
+      <div class="divider-beam"></div>
+    </div>
+
+    <div class="philosophy-grid">
+      <!-- Experience 1 -->
+      <div class="shadow-card tilt-card">
+        <div class="card-body">
+          <div class="philo-head">
+            <span class="philo-num">01</span>
+            <h3 class="philo-title">Permission Hierarchy Engineering</h3>
+          </div>
+          <p class="philo-text">
+            I build strict, locked-down role matrices from scratch. No `@everyone` administrative leaks, explicit separation between Trial Mod, Moderator, Senior Mod, and Admin tiers, and customized role color schemes tailored for dark mode clarity.
+          </p>
+          <div class="philo-highlight">PRINCIPLE: ZERO PRIVILEGE ESCALATION</div>
+        </div>
+      </div>
+
+      <!-- Experience 2 -->
+      <div class="shadow-card tilt-card">
+        <div class="card-body">
+          <div class="philo-head">
+            <span class="philo-num">02</span>
+            <h3 class="philo-title">Seamless Member Onboarding</h3>
+          </div>
+          <p class="philo-text">
+            Configured interactive 1-click rule acceptance gates using buttons and Discord community onboarding screens. Players get self-assignable ping roles (Updates, Giveaways, Sneak Peeks) without channel clutter.
+          </p>
+          <div class="philo-highlight">PRINCIPLE: NO WALLS OF TEXT, CLEAN GATES</div>
+        </div>
+      </div>
+
+      <!-- Experience 3 -->
+      <div class="shadow-card tilt-card">
+        <div class="card-body">
+          <div class="philo-head">
+            <span class="philo-num">03</span>
+            <h3 class="philo-title">Minecraft Network Discord Layouts</h3>
+          </div>
+          <p class="philo-text">
+            Engineered server structures for multi-gamemode networks (Survival, Bedwars, Skyblock). Dedicated category silos, private staff conference rooms, temporary voice room creators, and synchronized announcement channels.
+          </p>
+          <div class="philo-highlight">PRINCIPLE: CLEAN CATEGORY CAPS &amp; SILOS</div>
+        </div>
+      </div>
+
+      <!-- Experience 4 -->
+      <div class="shadow-card tilt-card">
+        <div class="card-body">
+          <div class="philo-head">
+            <span class="philo-num">04</span>
+            <h3 class="philo-title">Complete Audit Logging Pipelines</h3>
+          </div>
+          <p class="philo-text">
+            Setting up dedicated, private staff log channels for message edits/deletions (with image link preservation), voice channel joins/leaves, role grant tracking, and automated ban/kick records with reason logging.
+          </p>
+          <div class="philo-highlight">PRINCIPLE: 100% ACCOUNTABILITY &amp; AUDITS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 03 // DISCORD LANGUAGES & BOT TECH STACK -->
+    <div class="sec-head" id="sec-discord-stack">
+      <span class="rune-tag">03</span>
+      <span>DISCORD DEVELOPMENT TECH STACK</span>
+      <div class="divider-beam"></div>
+    </div>
+
+    <section class="shadow-card col-12 tilt-card" aria-label="Discord Tech Stack">
+      <div class="card-body">
+        <div class="grid-4" style="margin-bottom:12px;">
+          <div class="mc-slot max-crowned enchanted-glint" data-tt="Python Discord" data-ench="discord.py / nextcord" data-lore="Used for complex automation, async tasks, error logging, and backend scripts.">
+            <div class="slot-top">
+              <span class="slot-name">PYTHON</span>
+              <span class="slot-lvl">MAX</span>
+            </div>
+            <div class="slot-desc">discord.py, nextcord, cogs architecture, and async task loops.</div>
+          </div>
+
+          <div class="mc-slot max-crowned enchanted-glint" data-tt="JavaScript / TypeScript" data-ench="discord.js v14" data-lore="Used for interactive slash commands, button component collectors, modals, and web panels.">
+            <div class="slot-top">
+              <span class="slot-name">JS / TS</span>
+              <span class="slot-lvl">MAX</span>
+            </div>
+            <div class="slot-desc">discord.js v14, component collectors, modals, and REST API v10.</div>
+          </div>
+
+          <div class="mc-slot max-crowned enchanted-glint" data-tt="Java Discord (JDA)" data-ench="JDA 5.x" data-lore="Direct in-process embedding inside Paper/Velocity plugins for zero-latency event bridges.">
+            <div class="slot-top">
+              <span class="slot-name">JAVA (JDA)</span>
+              <span class="slot-lvl">MAX</span>
+            </div>
+            <div class="slot-desc">JDA 5 for direct Paper/Velocity plugin embedding &amp; sync.</div>
+          </div>
+
+          <div class="mc-slot max-crowned enchanted-glint" data-tt="Kotlin Discord (Kord)" data-ench="Kord Coroutines" data-lore="Used for reactive, coroutine-based asynchronous Discord modules and clean DSLs.">
+            <div class="slot-top">
+              <span class="slot-name">KOTLIN (KORD)</span>
+              <span class="slot-lvl">MAX</span>
+            </div>
+            <div class="slot-desc">Kord coroutine client for modern reactive JVM bot modules.</div>
+          </div>
+        </div>
+
+        <div class="grid-4">
+          <div class="mc-slot" data-tt="Slash Commands &amp; UI" data-ench="Discord API v10" data-lore="Interactive buttons, select menus, dynamic modals, and command autocomplete.">
+            <div class="slot-top">
+              <span class="slot-name">INTERACTIONS</span>
+              <span class="slot-lvl sub">UI V10</span>
+            </div>
+            <div class="slot-desc">Modern component-driven UI with buttons, menus, and modals.</div>
+          </div>
+
+          <div class="mc-slot" data-tt="Minecraft Integration" data-ench="Cross-Platform Bridge" data-lore="Two-way chat relays, account verification codes, console streams, and whitelist sync.">
+            <div class="slot-top">
+              <span class="slot-name">MINECRAFT SYNC</span>
+              <span class="slot-lvl sub">RELAY</span>
+            </div>
+            <div class="slot-desc">Two-way chat relay, account verification &amp; console streaming.</div>
+          </div>
+
+          <div class="mc-slot" data-tt="Webhooks &amp; REST" data-ench="High Throughput" data-lore="Custom webhook transmitters for store purchases, alerts, and embed telemetry.">
+            <div class="slot-top">
+              <span class="slot-name">WEBHOOKS</span>
+              <span class="slot-lvl sub">REST</span>
+            </div>
+            <div class="slot-desc">Secure webhook pipelines for server alerts, logs, and store purchases.</div>
+          </div>
+
+          <div class="mc-slot" data-tt="Sharding &amp; Caching" data-ench="Scale Architecture" data-lore="WebSocket client sharding, rate-limit backoff queues, and Redis state caching.">
+            <div class="slot-top">
+              <span class="slot-name">SHARDING</span>
+              <span class="slot-lvl sub">REDIS</span>
+            </div>
+            <div class="slot-desc">WebSocket sharding, rate-limit queues, Redis cache &amp; scale.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 04 // CONTACT FOR DISCORD BOTS & SERVERS -->
+    <div class="sec-head" id="sec-contact">
+      <span class="rune-tag">04</span>
+      <span>COMMISSION A DISCORD BOT OR SERVER SETUP</span>
+      <div class="divider-beam"></div>
+    </div>
+
+    <section class="shadow-card tilt-card" aria-label="Contact and Commission Information">
+      <div class="card-body contact-layout">
+        <div>
+          <div class="status-indicator">
+            <div class="status-dot"></div>
+            <span>STATUS: OPEN FOR CUSTOM DISCORD BOTS &amp; SERVER SETUPS</span>
+          </div>
+          <h3 style="font-family:'Cinzel',serif; font-size:20px; margin-bottom:10px;">Commission a Bot or Setup</h3>
+          <p style="font-size:13.5px; color:var(--muted); line-height:1.6; margin-bottom:16px;">
+            Need a custom Minecraft-Discord link bot, a support ticket engine, a Tebex store relay, or a complete server permissions and channels setup? Reach out directly:
+          </p>
+
+          <div class="contact-channels">
+            <!-- Discord -->
+            <div class="contact-row">
+              <div>
+                <div class="channel-label">DISCORD</div>
+                <div class="channel-val">ATOMIC_oDEV</div>
+              </div>
+              <button class="copy-btn" onclick="copyDiscordTag()" data-tt="Copy Discord" data-ench="Username: ATOMIC_oDEV" data-lore="Click to copy Discord handle to clipboard.">
+                <span>COPY TAG</span>
+              </button>
+            </div>
+
+            <!-- Email -->
+            <div class="contact-row">
+              <div>
+                <div class="channel-label">EMAIL</div>
+                <div class="channel-val" style="font-size:12px;">atomicstore7717@gmail.com</div>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <button class="copy-btn" onclick="copyEmail()" data-tt="Copy Email" data-ench="Direct Contact" data-lore="Click to copy email address to clipboard.">
+                  <span>COPY</span>
+                </button>
+                <a href="mailto:atomicstore7717@gmail.com" class="copy-btn" style="text-decoration:none;" data-tt="Send Email" data-ench="Mail Client" data-lore="Open in default mail client.">
+                  <span>SEND</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- GitHub -->
+            <div class="contact-row">
+              <div>
+                <div class="channel-label">GITHUB</div>
+                <div class="channel-val">github.com/atomic133</div>
+              </div>
+              <a href="https://github.com/atomic133" target="_blank" rel="noopener noreferrer" class="copy-btn" style="text-decoration:none;" data-tt="GitHub Profile" data-ench="Repositories" data-lore="Inspect open-source code and bot repositories.">
+                <span>OPEN LINK</span>
+              </a>
+            </div>
+
+            <!-- BuiltByBit -->
+            <div class="contact-row">
+              <div>
+                <div class="channel-label">BUILTBYBIT</div>
+                <div class="channel-val">ATOMIC_oDEV</div>
+              </div>
+              <button class="copy-btn" onclick="showToast('BUILTBYBIT: ATOMIC_oDEV')" data-tt="BuiltByBit Profile" data-ench="Verified Creator" data-lore="BuiltByBit marketplace resource author.">
+                <span>VIEW PROFILE</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Cairo Real-Time Clock Box -->
+        <div class="cairo-clock-card" id="cairoClockBox" data-tt="Cairo Time" data-ench="Local Timezone" data-lore="Real-time clock calculated in Cairo, Egypt (GMT+2 / GMT+3).">
+          <div style="font-family:'Silkscreen',monospace; font-size:10px; color:var(--muted); letter-spacing:0.08em;">
+            DEVELOPER LOCAL TIME
+          </div>
+          <div class="cairo-time-display" id="cairoTime">--:--:-- --</div>
+          <div class="cairo-tz">CAIRO, EGYPT (GMT+2 / GMT+3)</div>
+          <div style="margin-top:14px; font-size:11.5px; color:var(--muted); line-height:1.5;">
+            Active Coding Hours:<br />
+            <strong>4:00 PM – 11:30 PM (Cairo Time)</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div>ATOMIC // DISCORD BOT &amp; COMMUNITY SERVER ARCHITECT</div>
+      <div class="footer-meta">
+        <span>DISCORD: ATOMIC_oDEV</span>
+        <span>STACK: DISCORD.PY / DISCORD.JS / JDA</span>
+        <span>LOCATION: CAIRO, EGYPT</span>
+      </div>
+      <div style="margin-top:10px; color:var(--dim); font-size:9.5px;">
+        BUILT WITH VANILLA HTML, CSS &amp; JAVASCRIPT • ZERO EMOJIS • NO AI SLOP
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- BOTTOM 9-SLOT MINECRAFT HOTBAR DOCK -->
+  <nav class="hotbar-dock" aria-label="Minecraft Inventory Hotbar">
+    <div class="hb-slot selected" data-tt="Slot 1: Top" data-ench="Overview" data-lore="Press [1] or click to scroll to top.">
+      <span class="hb-key">1</span>
+      <span class="hb-icon">HM</span>
+      <span>TOP</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 2: Bots" data-ench="Bot Projects" data-lore="Press [2] or click to jump to Custom Discord Bots.">
+      <span class="hb-key">2</span>
+      <span class="hb-icon">BT</span>
+      <span>BOTS</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 3: Setups" data-ench="Server Setups" data-lore="Press [3] or click to jump to Community &amp; Server Builds.">
+      <span class="hb-key">3</span>
+      <span class="hb-icon">SR</span>
+      <span>SETUPS</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 4: Stack" data-ench="Frameworks" data-lore="Press [4] or click to view Discord Tech Stack.">
+      <span class="hb-key">4</span>
+      <span class="hb-icon">SK</span>
+      <span>STACK</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 5: Contact" data-ench="Commissions" data-lore="Press [5] or click to jump to Contact &amp; Commissions.">
+      <span class="hb-key">5</span>
+      <span class="hb-icon">CT</span>
+      <span>CONTACT</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 6: Atomic" data-ench="Intro Trigger" data-lore="Press [6] or click to replay the I... AM... ATOMIC sequence.">
+      <span class="hb-key">6</span>
+      <span class="hb-icon">AT</span>
+      <span>ATOMIC</span>
+    </div>
+    <div class="hb-slot" onclick="location.href='index.html'" data-tt="Slot 7: Main Site" data-ench="Navigation" data-lore="Press [7] or click to return to the Minecraft developer portfolio.">
+      <span class="hb-key">7</span>
+      <span class="hb-icon">MC</span>
+      <span>MC DEV</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 8: Theme" data-ench="Cycle Palette" data-lore="Press [8] or click to cycle next dark mode theme.">
+      <span class="hb-key">8</span>
+      <span class="hb-icon">TM</span>
+      <span>THEME</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 9: Cairo" data-ench="Local Time" data-lore="Press [9] or click to view Cairo time and status.">
+      <span class="hb-key">9</span>
+      <span class="hb-icon">EG</span>
+      <span>CAIRO</span>
+    </div>
+  </nav>
+
+  <!-- FLOATING MINECRAFT TOAST NOTIFICATION -->
+  <div id="mc-toast" role="status" aria-live="polite"></div>
+
+  <!-- Core Application Script -->
+  <script src="main.js"></script>
+</body>
+</html>

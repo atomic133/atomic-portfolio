@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="atomic-violet">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATOMIC — Minecraft Plugin & Network Developer</title>
+  <meta name="description" content="Portfolio of Atomic, a 15-year-old Minecraft developer from Cairo, Egypt specializing in Paper/Spigot plugins, ProtocolLib packet hooks, and Velocity proxy networks." />
+
+  <meta name="theme-color" content="#060509" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23060509'/><polygon points='8,2 14,8 8,14 2,8' fill='%238b5cf6'/><polygon points='8,5 11,8 8,11 5,8' fill='%23c4b5fd'/></svg>" />
+
+  <!-- Open Graph / SEO Social Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ATOMIC — Minecraft Plugin &amp; Discord Bot Developer" />
+  <meta property="og:description" content="15 y/o Minecraft &amp; Discord developer from Cairo, Egypt. Paper/Spigot plugins, ProtocolLib packet hooks, Velocity networks, and full-stack Discord bots." />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ATOMIC — Minecraft Plugin &amp; Discord Bot Developer" />
+  <meta name="twitter:description" content="Building plugins, packet hooks, proxy setups, and custom Discord bots." />
+
+  <!-- Google Fonts: Cinzel, Inter, JetBrains Mono, Silkscreen -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 1. 16×16 ENCHANTED NETHERITE SWORD CURSOR -->
+  <div id="sword-cursor" aria-hidden="true">
+    <canvas id="swordCanvas" width="16" height="16"></canvas>
+  </div>
+
+  <!-- MINECRAFT LORE TOOLTIP -->
+  <div id="mc-tooltip" role="tooltip" aria-hidden="true">
+    <div class="tt-title" id="tt-title">Netherite Sword</div>
+    <div class="tt-ench" id="tt-ench">Sharpness V</div>
+    <div class="tt-lore" id="tt-lore">Hover over any slot or badge to inspect details.</div>
+  </div>
+
+  <!-- 2. "I... AM... ATOMIC" INTRO OVERLAY -->
+  <div id="atomic-intro" aria-hidden="true">
+    <div class="atomic-chant" id="chantText">I... AM...</div>
+    <div class="atomic-sphere" id="atomicSphere"></div>
+  </div>
+
+  <!-- 3. LIVE BACKGROUND: COSMIC NEBULAE & GEOMETRIC MAGIC ARRAYS -->
+  <div class="bg-world" aria-hidden="true">
+    <div class="bg-glow-orb bg-glow-orb-1"></div>
+    <div class="bg-glow-orb bg-glow-orb-2"></div>
+    <svg class="magic-array" viewBox="0 0 500 500" fill="none" stroke="currentColor" style="color: var(--atomic);">
+      <circle cx="250" cy="250" r="230" stroke-width="1.5" stroke-dasharray="12 6" />
+      <circle cx="250" cy="250" r="210" stroke-width="1" />
+      <polygon points="250,40 432,355 68,355" stroke-width="1.2" />
+      <polygon points="250,460 432,145 68,145" stroke-width="1.2" />
+      <rect x="102" y="102" width="296" height="296" stroke-width="1" transform="rotate(45 250 250)" />
+      <circle cx="250" cy="250" r="95" stroke-width="1.5" stroke-dasharray="4 8" />
+    </svg>
+    <svg class="magic-array-inner" viewBox="0 0 400 400" fill="none" stroke="currentColor" style="color: var(--gold);">
+      <circle cx="200" cy="200" r="180" stroke-width="1" stroke-dasharray="20 10" />
+      <rect x="75" y="75" width="250" height="250" stroke-width="1" />
+      <rect x="75" y="75" width="250" height="250" stroke-width="1" transform="rotate(45 200 200)" />
+    </svg>
+  </div>
+
+  <!-- 60FPS RUNES, SPARKS & SLASH ARCS CANVAS -->
+  <canvas id="fxCanvas" aria-hidden="true"></canvas>
+
+  <!-- 4. TOP COMMAND BAR -->
+  <header class="top-bar">
+    <div class="sigil">
+      <div class="sigil-gem"></div>
+      <span>ATOMIC // MINECRAFT DEV</span>
+    </div>
+
+    <div class="bar-controls">
+      <button class="mode-btn active" data-theme="atomic-violet" onclick="setMode('atomic-violet')" data-tt="Theme: Shadow Violet" data-ench="Default Palette" data-lore="Muted obsidian, dark violet & weathered gold.">1. Shadow Violet</button>
+      <button class="mode-btn" data-theme="atomic-blue" onclick="setMode('atomic-blue')" data-tt="Theme: Deep Blue" data-ench="Oceanic Slate" data-lore="Dark midnight abyss & atmospheric cyan.">2. Deep Blue</button>
+      <button class="mode-btn" data-theme="blood-moon" onclick="setMode('blood-moon')" data-tt="Theme: Blood Moon" data-ench="Crimson Phase" data-lore="Charcoal black & dark wine rose.">3. Blood Moon</button>
+      <button class="atomic-ult-btn" onclick="castAtomic()" data-tt="Replay Intro" data-ench="Keybind [3]" data-lore="Trigger the full I... AM... ATOMIC sequence.">I AM ATOMIC</button>
+    </div>
+  </header>
+
+  <!-- 5. MAIN CONTENT CONTAINER -->
+  <main class="container">
+
+    <!-- HERO SECTION (2-COLUMN GRID) -->
+    <section class="shadow-card tilt-card" aria-label="Developer Profile Hero">
+      <div class="card-body hero-layout">
+        <!-- Left Column: Biography & Badges -->
+        <div>
+          <div class="guild-tag enchanted-glint">
+            <span>MINECRAFT PLUGIN &amp; DISCORD BOT DEVELOPER</span>
+          </div>
+          <h1 class="hero-title">ATOMIC</h1>
+          <div class="hero-quote">"Building plugins, packet hooks, proxy setups, and Discord bots."</div>
+          <p class="hero-desc">
+            I'm a 15-year-old developer from <strong>Cairo, Egypt</strong> with <strong>2+ years</strong> of coding experience. I spend most of my time making custom plugins for <strong>Paper and Spigot</strong>, working with packets using <strong>ProtocolLib</strong>, connecting server networks through <strong>Velocity and BungeeCord</strong>, and creating full-featured <strong>Discord bots</strong> for server automation and player account linking.
+          </p>
+
+          <div class="player-stats-row">
+            <div class="mc-badge enchanted-glint" data-tt="Developer Location" data-ench="Cairo, Egypt" data-lore="Based in Cairo (GMT+2 / GMT+3).">
+              <span>LOC:</span> <span class="gold">CAIRO, EGYPT</span>
+            </div>
+            <div class="mc-badge enchanted-glint" data-tt="Coding Experience" data-ench="2+ Years Active" data-lore="Writing Java plugins, Kotlin modules, and backend tools since 13.">
+              <span>EXP:</span> <span class="gold">2+ YEARS</span>
+            </div>
+            <div class="mc-badge enchanted-glint" data-tt="Developer Age" data-ench="15 Years Old" data-lore="High school developer passionate about JVM architectures.">
+              <span>AGE:</span> <span class="gold">15 Y/O</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Live Discord Bot & Telemetry Panel -->
+        <div class="monitor-panel discord-monitor-panel" onclick="window.open('discord.html', '_blank')" data-tt="Discord Experiences" data-ench="Click: Open New Tab" data-lore="Click to open my complete Discord servers &amp; bot engineering portfolio in a new tab.">
+          <div class="monitor-header">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span class="pulse-dot-discord"></span>
+              <span>DISCORD BOT ENGINE</span>
+            </div>
+            <span id="gatewayPing" style="color:#5865F2; font-family:'JetBrains Mono',monospace; font-weight:700;">24ms GATEWAY</span>
+          </div>
+          <canvas id="discordScope"></canvas>
+          <div class="live-metrics">
+            <div class="metric-cell">
+              <div class="metric-num" id="dcMemberCount">14,200+</div>
+              <div class="metric-lbl">MEMBERS</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-num">18</div>
+              <div class="metric-lbl">SERVERS</div>
+            </div>
+            <div class="metric-cell">
+              <div class="metric-num">99.98%</div>
+              <div class="metric-lbl">BOT UPTIME</div>
+            </div>
+          </div>
+          <div class="discord-hero-cta">
+            <span>VIEW DISCORD EXPERIENCES [NEW TAB]</span>
+            <span class="external-arrow">&nearr;</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 01 // LANGUAGES & SERVER SOFTWARE (12-COLUMN BENTO GRID) -->
+    <div class="sec-head" id="sec-stack">
+      <span class="rune-tag">01</span>
+      <span>LANGUAGES &amp; SERVER SOFTWARE</span>
+      <div class="divider-beam"></div>
+    </div>
+
+    <div class="bento">
+      <!-- Left Card (7 Columns — "Languages I Use") -->
+      <section class="shadow-card col-7 tilt-card" aria-label="Languages I Use">
+        <div class="card-body">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2 class="bento-card-title">Languages I Use</h2>
+            <span style="font-family:'Silkscreen',monospace; font-size:9.5px; color:var(--gold);">4 AT MAX LEVEL</span>
+          </div>
+
+          <!-- Top MAX Tier (2×2 Grid with gold border & enchantment glint) -->
+          <div class="max-slot-grid">
+            <div class="mc-slot max-crowned enchanted-glint" data-tt="Java" data-ench="Level: MAX" data-lore="Main language for Paper/Spigot plugins, proxy modules, and raw NMS packet handling.">
+              <div class="slot-top">
+                <span class="slot-name">JAVA</span>
+                <span class="slot-lvl">MAX</span>
+              </div>
+              <div class="slot-desc">Main language for Paper/Spigot plugins and proxy modules.</div>
+            </div>
+
+            <div class="mc-slot max-crowned enchanted-glint" data-tt="Kotlin" data-ench="Level: MAX" data-lore="Modern JVM plugins, coroutines, extension functions, and expressive event DSLs.">
+              <div class="slot-top">
+                <span class="slot-name">KOTLIN</span>
+                <span class="slot-lvl">MAX</span>
+              </div>
+              <div class="slot-desc">Modern JVM plugins, event DSLs, and async tasks.</div>
+            </div>
+
+            <div class="mc-slot max-crowned enchanted-glint" data-tt="Python" data-ench="Level: MAX" data-lore="Backend automation scripts, Discord server bots, and maintenance utilities.">
+              <div class="slot-top">
+                <span class="slot-name">PYTHON</span>
+                <span class="slot-lvl">MAX</span>
+              </div>
+              <div class="slot-desc">Backend scripts, Discord bots, and server automation.</div>
+            </div>
+
+            <div class="mc-slot max-crowned enchanted-glint" data-tt="JavaScript" data-ench="Level: MAX" data-lore="Web dashboards, REST API hooks, and Node.js integrations for server sync.">
+              <div class="slot-top">
+                <span class="slot-name">JAVASCRIPT</span>
+                <span class="slot-lvl">MAX</span>
+              </div>
+              <div class="slot-desc">Web panels, API hooks, and Node.js bot integrations.</div>
+            </div>
+          </div>
+
+          <!-- Secondary Row (3-Column Grid: Groovy, Lua, Skript) -->
+          <div class="slot-grid">
+            <div class="mc-slot" data-tt="Groovy (Gradle)" data-ench="Build Automation" data-lore="Configuring multi-project Gradle builds, shadowJar shading, and repo publishing.">
+              <div class="slot-top">
+                <span class="slot-name">GROOVY</span>
+                <span class="slot-lvl sub">GRADLE</span>
+              </div>
+              <div class="slot-desc">Gradle build scripts &amp; shading.</div>
+            </div>
+
+            <div class="mc-slot" data-tt="Lua (Script)" data-ench="Embedded Engine" data-lore="Lightweight configs, embedded hot-reload scripts, and game logic.">
+              <div class="slot-top">
+                <span class="slot-name">LUA</span>
+                <span class="slot-lvl sub">SCRIPT</span>
+              </div>
+              <div class="slot-desc">Lightweight embedded scripts.</div>
+            </div>
+
+            <div class="mc-slot" data-tt="Skript (Server)" data-ench="Rapid Prototyping" data-lore="Rapid command prototyping and live event testing without reloading plugins.">
+              <div class="slot-top">
+                <span class="slot-name">SKRIPT</span>
+                <span class="slot-lvl sub">SERVER</span>
+              </div>
+              <div class="slot-desc">Fast custom commands &amp; events.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Card (5 Columns — "Servers, Tools & Databases") -->
+      <section class="shadow-card col-5 tilt-card" aria-label="Servers, Tools and Databases">
+        <div class="card-body">
+          <h2 class="bento-card-title" style="margin-bottom:14px;">Servers, Tools &amp; Databases</h2>
+
+          <!-- 2×2 Platform & Tool Grid -->
+          <div class="slot-grid grid-2x2">
+            <div class="mc-slot enchanted-glint" data-tt="Paper / Spigot" data-ench="Server Core" data-lore="Building custom gameplay mechanics, inventory GUIs, and low-overhead event handlers.">
+              <div class="slot-top">
+                <span class="slot-name">PAPER / SPIGOT</span>
+              </div>
+              <div class="slot-desc">Main server software I build plugins for.</div>
+            </div>
+
+            <div class="mc-slot enchanted-glint" data-tt="Velocity / Bungee" data-ench="Network Proxy" data-lore="Linking servers together with cross-server messaging and seamless player switching.">
+              <div class="slot-top">
+                <span class="slot-name">VELOCITY / BUNGEE</span>
+              </div>
+              <div class="slot-desc">Proxy setups and cross-server plugins.</div>
+            </div>
+
+            <div class="mc-slot enchanted-glint" data-tt="ProtocolLib" data-ench="Packet Manipulation" data-lore="Intercepting, modifying, and constructing clientbound/serverbound Minecraft packets.">
+              <div class="slot-top">
+                <span class="slot-name">PROTOCOLLIB</span>
+              </div>
+              <div class="slot-desc">Packet listeners and custom client effects.</div>
+            </div>
+
+            <div class="mc-slot enchanted-glint" data-tt="Gradle" data-ench="Project Architecture" data-lore="Compiling shadow jars, dependency versioning, and automated artifacts.">
+              <div class="slot-top">
+                <span class="slot-name">GRADLE</span>
+              </div>
+              <div class="slot-desc">Building jars and managing dependencies.</div>
+            </div>
+          </div>
+
+          <!-- Honest Database Box (SQLite & MySQL — Basic / Learning) -->
+          <div class="mana-box" data-tt="SQLite &amp; MySQL" data-ench="Databases (Basic / Learning)" data-lore="Basic player statistics, inventories, and async queries using HikariCP.">
+            <div class="mana-head">
+              <span style="color:var(--atomic-core);">SQLITE &amp; MYSQL</span>
+              <span style="color:var(--gold);">BASIC / LEARNING</span>
+            </div>
+            <div class="xp-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+              <div class="xp-fill"></div>
+            </div>
+            <p class="mana-desc">
+              I use SQLite and MySQL to store basic player data and stats. Not the best at databases yet, but I know the fundamentals and I'm still improving.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Full-Width Card (12 Columns — "Discord Development & Bot Engineering") -->
+      <section class="shadow-card col-12 tilt-card" aria-label="Discord Development & Bot Engineering">
+        <div class="card-body">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <h2 class="bento-card-title">Discord Development &amp; Bot Engineering</h2>
+              <span class="rune-tag">DISCORD DEV</span>
+            </div>
+            <span style="font-family:'Silkscreen',monospace; font-size:9.5px; color:var(--gold);">ALL BOT LANGUAGES &amp; FULL STACK</span>
+          </div>
+
+          <!-- Subheader 1: Languages & Libraries for Discord -->
+          <div style="font-family:'Silkscreen',monospace; font-size:9.5px; color:var(--muted); margin-bottom:8px; letter-spacing:0.06em;">
+            DISCORD LANGUAGES &amp; FRAMEWORKS
+          </div>
+          <div class="grid-4" style="margin-bottom:14px;">
+            <div class="mc-slot max-crowned enchanted-glint" data-tt="Python Discord Dev" data-ench="discord.py / nextcord" data-lore="Used for async cogs, task loops, automated error reporting, and Discord API scripts.">
+              <div class="slot-top">
+                <span class="slot-name">PYTHON</span>
+                <span class="slot-lvl">MAX</span>
+              </div>
+              <div class="slot-desc">discord.py, nextcord, async cogs, and automated task loops.</div>
+            </div>
+
+            <div class="mc-slot max-crowned enchanted-glint" data-tt="JavaScript / TypeScript" data-ench="discord.js v14" data-lore="Used for interactive slash commands, button collectors, modals, and web dashboard sync.">
+              <div class="slot-top">
+                <span class="slot-name">JS / TS</span>
+                <span class="slot-lvl">MAX</span>
+              </div>
+              <div class="slot-desc">discord.js v14, component collectors, modals, and REST API.</div>
+            </div>
+
+            <div class="mc-slot max-crowned enchanted-glint" data-tt="Java Discord (JDA)" data-ench="JDA 5.x" data-lore="Direct in-process embedding inside Paper/Velocity plugins for zero-delay Minecraft-Discord chat.">
+              <div class="slot-top">
+                <span class="slot-name">JAVA (JDA)</span>
+                <span class="slot-lvl">MAX</span>
+              </div>
+              <div class="slot-desc">JDA 5 for direct Paper/Velocity plugin embedding &amp; sync.</div>
+            </div>
+
+            <div class="mc-slot max-crowned enchanted-glint" data-tt="Kotlin Discord (Kord)" data-ench="Kord Coroutines" data-lore="Used for coroutine-driven asynchronous event listeners and reactive Discord modules.">
+              <div class="slot-top">
+                <span class="slot-name">KOTLIN (KORD)</span>
+                <span class="slot-lvl">MAX</span>
+              </div>
+              <div class="slot-desc">Kord coroutine client for modern reactive JVM bot modules.</div>
+            </div>
+          </div>
+
+          <!-- Subheader 2: Bot Skills & Capabilities -->
+          <div style="font-family:'Silkscreen',monospace; font-size:9.5px; color:var(--muted); margin-bottom:8px; letter-spacing:0.06em;">
+            DISCORD BOT ARCHITECTURE &amp; CAPABILITIES
+          </div>
+          <div class="grid-4">
+            <div class="mc-slot" data-tt="v10 Interactions" data-ench="Modern Discord UI" data-lore="Full support for Slash Commands, Dynamic Buttons, Select Menus, Modals, and Autocomplete.">
+              <div class="slot-top">
+                <span class="slot-name">INTERACTIONS</span>
+                <span class="slot-lvl sub">UI V10</span>
+              </div>
+              <div class="slot-desc">Slash commands, buttons, menus, dynamic modals &amp; autocomplete.</div>
+            </div>
+
+            <div class="mc-slot" data-tt="Minecraft Server Sync" data-ench="Two-Way Bridge" data-lore="Linking Minecraft accounts via code verification, bidirectional chat relay, and staff console streaming.">
+              <div class="slot-top">
+                <span class="slot-name">MINECRAFT SYNC</span>
+                <span class="slot-lvl sub">BRIDGE</span>
+              </div>
+              <div class="slot-desc">Account verification, 2-way chat relay &amp; live console streaming.</div>
+            </div>
+
+            <div class="mc-slot" data-tt="Guild Automation" data-ench="Security &amp; Tickets" data-lore="Automated ticket systems with HTML transcripts, role sync, regex anti-spam, and audit log telemetry.">
+              <div class="slot-top">
+                <span class="slot-name">AUTOMATION</span>
+                <span class="slot-lvl sub">SECURITY</span>
+              </div>
+              <div class="slot-desc">Ticket transcripts, role sync, anti-spam regex &amp; audit logging.</div>
+            </div>
+
+            <div class="mc-slot" data-tt="Scaling &amp; Sharding" data-ench="High Performance" data-lore="WebSocket client sharding, rate-limit backoff queues, Redis state caching, and multi-server architecture.">
+              <div class="slot-top">
+                <span class="slot-name">SHARDING</span>
+                <span class="slot-lvl sub">SCALE</span>
+              </div>
+              <div class="slot-desc">WebSocket sharding, rate-limit queues, Redis cache &amp; webhooks.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SECTION 02 // FEATURED PROJECTS & PLUGINS -->
+    <div class="sec-head" id="sec-projects">
+      <span class="rune-tag">02</span>
+      <span>FEATURED PROJECTS &amp; PLUGINS</span>
+      <div class="divider-beam"></div>
+    </div>
+
+    <div class="projects-grid">
+      <!-- Project 1: PacketGuard -->
+      <article class="shadow-card tilt-card" aria-label="PacketGuard Project">
+        <div class="card-body project-card">
+          <div>
+            <div class="project-head">
+              <h3 class="project-name">PacketGuard</h3>
+              <span class="project-tag">ANTI-CRASH / PACKETS</span>
+            </div>
+            <p class="project-desc">
+              Lightweight ProtocolLib packet filter designed to intercept and drop invalid window click payloads, oversized book NBT data, and illegal movement packets before they reach the main server thread.
+            </p>
+            <div class="project-metrics-box">
+              <span>LATENCY: &lt; 0.02ms</span>
+              <span>12 EXPLOIT TYPES</span>
+              <span>KOTLIN + PROTOCOLLIB</span>
+            </div>
+            <div class="project-tags-row">
+              <span class="mini-badge">PAPER 1.20</span>
+              <span class="mini-badge">PROTOCOLLIB</span>
+              <span class="mini-badge">KOTLIN</span>
+              <span class="mini-badge">NMS</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span style="font-family:'Silkscreen',monospace; font-size:9px; color:var(--dim);">STATUS: PRODUCTION</span>
+            <button class="proj-btn" onclick="showToast('PACKETGUARD: PRIVATE REPO / ACTIVE IN PRODUCTION')" data-tt="PacketGuard" data-ench="Repository Status" data-lore="Used in production servers to prevent client crashes.">
+              <span>VIEW DETAILS</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2: VelocitySync -->
+      <article class="shadow-card tilt-card" aria-label="VelocitySync Project">
+        <div class="card-body project-card">
+          <div>
+            <div class="project-head">
+              <h3 class="project-name">VelocitySync</h3>
+              <span class="project-tag">CROSS-SERVER BRIDGE</span>
+            </div>
+            <p class="project-desc">
+              High-throughput Redis Pub/Sub synchronization module connecting Velocity proxies to Paper backends. Powers global staff channels, player network routing, and real-time punishment broadcasts.
+            </p>
+            <div class="project-metrics-box">
+              <span>PUB/SUB: &lt; 4ms</span>
+              <span>3,000+ SESSIONS</span>
+              <span>JAVA 17 + REDIS</span>
+            </div>
+            <div class="project-tags-row">
+              <span class="mini-badge">VELOCITY 3.3</span>
+              <span class="mini-badge">BUNGEE</span>
+              <span class="mini-badge">REDIS</span>
+              <span class="mini-badge">JAVA</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span style="font-family:'Silkscreen',monospace; font-size:9px; color:var(--dim);">STATUS: OPEN SOURCE</span>
+            <button class="proj-btn" onclick="showToast('VELOCITYSYNC: REDIS PUB/SUB BRIDGE')" data-tt="VelocitySync" data-ench="Network Engine" data-lore="Handles cross-server packet routing with sub-5ms latency.">
+              <span>VIEW DETAILS</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3: NovaCore -->
+      <article class="shadow-card tilt-card" aria-label="NovaCore Project">
+        <div class="card-body project-card">
+          <div>
+            <div class="project-head">
+              <h3 class="project-name">NovaCore</h3>
+              <span class="project-tag">SERVER OPTIMIZER</span>
+            </div>
+            <p class="project-desc">
+              Custom server foundation plugin implementing virtualized inventory GUIs, asynchronous block-state caching, and HikariCP connection pooling for player statistics and economy storage.
+            </p>
+            <div class="project-metrics-box">
+              <span>20.0 TPS LOCKED</span>
+              <span>80% FEWER GC STALLS</span>
+              <span>JAVA + HIKARICP</span>
+            </div>
+            <div class="project-tags-row">
+              <span class="mini-badge">SPIGOT</span>
+              <span class="mini-badge">PAPER</span>
+              <span class="mini-badge">SQLITE</span>
+              <span class="mini-badge">HIKARICP</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span style="font-family:'Silkscreen',monospace; font-size:9px; color:var(--dim);">STATUS: RELEASED</span>
+            <button class="proj-btn" onclick="showToast('NOVACORE: PAPER SERVER ENGINE')" data-tt="NovaCore" data-ench="Performance Core" data-lore="Custom event bus and optimized SQLite/MySQL connection pool.">
+              <span>VIEW DETAILS</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 4: DiscordBridge -->
+      <article class="shadow-card tilt-card" aria-label="DiscordBridge Project">
+        <div class="card-body project-card">
+          <div>
+            <div class="project-head">
+              <h3 class="project-name">DiscordBridge</h3>
+              <span class="project-tag">TELEMETRY &amp; BOTS</span>
+            </div>
+            <p class="project-desc">
+              Two-way Discord bot written in Python for server console streaming, automated error parsing, crash dump notifications, and in-game player verification with secure webhooks.
+            </p>
+            <div class="project-metrics-box">
+              <span>DISCORD.PY</span>
+              <span>ASYNC WEBHOOKS</span>
+              <span>CRASH PARSER</span>
+            </div>
+            <div class="project-tags-row">
+              <span class="mini-badge">PYTHON 3.11</span>
+              <span class="mini-badge">DISCORD.PY</span>
+              <span class="mini-badge">REST API</span>
+              <span class="mini-badge">ASYNCIO</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span style="font-family:'Silkscreen',monospace; font-size:9px; color:var(--dim);">STATUS: PRODUCTION</span>
+            <button class="proj-btn" onclick="showToast('DISCORDBRIDGE: TELEMETRY BOT')" data-tt="DiscordBridge" data-ench="Bot Automation" data-lore="Real-time log streamer and player link verification system.">
+              <span>VIEW DETAILS</span>
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- SECTION 03 // ARCHITECTURE & PHILOSOPHY -->
+    <div class="sec-head" id="sec-philosophy">
+      <span class="rune-tag">03</span>
+      <span>DEVELOPMENT &amp; SERVER PHILOSOPHY</span>
+      <div class="divider-beam"></div>
+    </div>
+
+    <div class="philosophy-grid">
+      <div class="shadow-card tilt-card">
+        <div class="card-body">
+          <div class="philo-head">
+            <span class="philo-num">01</span>
+            <h3 class="philo-title">Async by Default</h3>
+          </div>
+          <p class="philo-text">
+            Never block the main server tick thread. Database queries, disk I/O, Discord webhooks, and HTTP API calls always run on separate worker pools using CompletableFuture or Kotlin coroutines.
+          </p>
+          <div class="philo-highlight">RULE: 0ms MAIN THREAD WAIT</div>
+        </div>
+      </div>
+
+      <div class="shadow-card tilt-card">
+        <div class="card-body">
+          <div class="philo-head">
+            <span class="philo-num">02</span>
+            <h3 class="philo-title">Packet-Level Interception</h3>
+          </div>
+          <p class="philo-text">
+            Instead of spawning dozens of heavy server-side entities or armor stands, write custom clientbound packet listeners with ProtocolLib. It reduces server memory overhead and keeps client FPS stable.
+          </p>
+          <div class="philo-highlight">RULE: MINIMIZE SERVER ENTITY COUNT</div>
+        </div>
+      </div>
+
+      <div class="shadow-card tilt-card">
+        <div class="card-body">
+          <div class="philo-head">
+            <span class="philo-num">03</span>
+            <h3 class="philo-title">Clean Gradle Shading</h3>
+          </div>
+          <p class="philo-text">
+            Every library is shaded and relocated via ShadowJar under a custom package prefix. This completely avoids ClassNotFound exceptions or runtime version conflicts with other plugins.
+          </p>
+          <div class="philo-highlight">RULE: RELOCATE ALL DEPENDENCIES</div>
+        </div>
+      </div>
+
+      <div class="shadow-card tilt-card">
+        <div class="card-body">
+          <div class="philo-head">
+            <span class="philo-num">04</span>
+            <h3 class="philo-title">Fail-Safe Persistence</h3>
+          </div>
+          <p class="philo-text">
+            Player statistics and inventories are flushed using atomic writes and HikariCP connection pools. If the server crashes or force-stops, player progress is preserved without corrupted saves.
+          </p>
+          <div class="philo-highlight">RULE: ZERO INVENTORY ROLLBACKS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 04 // CONTACT & COMMISSIONS STATION -->
+    <div class="sec-head" id="sec-contact">
+      <span class="rune-tag">04</span>
+      <span>CONTACT &amp; COMMISSIONS</span>
+      <div class="divider-beam"></div>
+    </div>
+
+    <section class="shadow-card tilt-card" aria-label="Contact and Commission Information">
+      <div class="card-body contact-layout">
+        <div>
+          <div class="status-indicator">
+            <div class="status-dot"></div>
+            <span>STATUS: OPEN FOR WORK (SMALL PLUGINS &amp; PROXY SETUPS)</span>
+          </div>
+          <h3 style="font-family:'Cinzel',serif; font-size:20px; margin-bottom:10px;">Get in Touch</h3>
+          <p style="font-size:13.5px; color:var(--muted); line-height:1.6; margin-bottom:16px;">
+            Need a custom Paper plugin, packet hook, proxy network setup, or automated Discord bridge? Reach out on Discord or GitHub. I usually reply within a few hours after school.
+          </p>
+
+          <div class="contact-channels">
+            <!-- Discord -->
+            <div class="contact-row">
+              <div>
+                <div class="channel-label">DISCORD</div>
+                <div class="channel-val">ATOMIC_oDEV</div>
+              </div>
+              <button class="copy-btn" onclick="copyDiscordTag()" data-tt="Copy Discord" data-ench="Username: ATOMIC_oDEV" data-lore="Click to copy Discord handle to clipboard.">
+                <span>COPY TAG</span>
+              </button>
+            </div>
+
+            <!-- Email -->
+            <div class="contact-row">
+              <div>
+                <div class="channel-label">EMAIL</div>
+                <div class="channel-val" style="font-size:12px;">atomicstore7717@gmail.com</div>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <button class="copy-btn" onclick="copyEmail()" data-tt="Copy Email" data-ench="Direct Contact" data-lore="Click to copy email address to clipboard.">
+                  <span>COPY</span>
+                </button>
+                <a href="mailto:atomicstore7717@gmail.com" class="copy-btn" style="text-decoration:none;" data-tt="Send Email" data-ench="Mail Client" data-lore="Open in default mail client.">
+                  <span>SEND</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- GitHub -->
+            <div class="contact-row">
+              <div>
+                <div class="channel-label">GITHUB</div>
+                <div class="channel-val">github.com/atomic133</div>
+              </div>
+              <a href="https://github.com/atomic133" target="_blank" rel="noopener noreferrer" class="copy-btn" style="text-decoration:none;" data-tt="GitHub Profile" data-ench="Repositories" data-lore="Inspect open-source code and plugin repositories.">
+                <span>OPEN LINK</span>
+              </a>
+            </div>
+
+            <!-- BuiltByBit -->
+            <div class="contact-row">
+              <div>
+                <div class="channel-label">BUILTBYBIT</div>
+                <div class="channel-val">ATOMIC_oDEV</div>
+              </div>
+              <button class="copy-btn" onclick="showToast('BUILTBYBIT: ATOMIC_oDEV')" data-tt="BuiltByBit Profile" data-ench="Verified Creator" data-lore="BuiltByBit marketplace resource author.">
+                <span>VIEW PROFILE</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Cairo Real-Time Clock Box -->
+        <div class="cairo-clock-card" id="cairoClockBox" data-tt="Cairo Time" data-ench="Local Timezone" data-lore="Real-time clock calculated in Cairo, Egypt (GMT+2 / GMT+3).">
+          <div style="font-family:'Silkscreen',monospace; font-size:10px; color:var(--muted); letter-spacing:0.08em;">
+            DEVELOPER LOCAL TIME
+          </div>
+          <div class="cairo-time-display" id="cairoTime">--:--:-- --</div>
+          <div class="cairo-tz">CAIRO, EGYPT (GMT+2 / GMT+3)</div>
+          <div style="margin-top:14px; font-size:11.5px; color:var(--muted); line-height:1.5;">
+            Active Coding Hours:<br />
+            <strong>4:00 PM – 11:30 PM (Cairo Time)</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div>ATOMIC // MINECRAFT PLUGIN &amp; NETWORK DEVELOPER</div>
+      <div class="footer-meta">
+        <span>ENGINE: PAPER 1.20.4</span>
+        <span>PROXY: VELOCITY 3.3.0</span>
+        <span>COORDS: 30.0444° N, 31.2357° E</span>
+        <span>CAIRO, EGYPT</span>
+      </div>
+      <div style="margin-top:10px; color:var(--dim); font-size:9.5px;">
+        BUILT WITH VANILLA HTML, CSS &amp; JAVASCRIPT • ZERO EMOJIS • NO AI SLOP
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- 6. BOTTOM 9-SLOT MINECRAFT HOTBAR DOCK -->
+  <nav class="hotbar-dock" aria-label="Minecraft Inventory Hotbar">
+    <div class="hb-slot selected" data-tt="Slot 1: Home" data-ench="Navigation" data-lore="Press [1] or click to scroll to top.">
+      <span class="hb-key">1</span>
+      <span class="hb-icon">HM</span>
+      <span>HOME</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 2: Stack" data-ench="Bento Grid" data-lore="Press [2] or click to jump to Languages &amp; Server Software.">
+      <span class="hb-key">2</span>
+      <span class="hb-icon">ST</span>
+      <span>STACK</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 3: Projects" data-ench="Plugin Releases" data-lore="Press [3] or click to jump to Featured Projects.">
+      <span class="hb-key">3</span>
+      <span class="hb-icon">PR</span>
+      <span>PROJ</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 4: Philosophy" data-ench="Architecture" data-lore="Press [4] or click to inspect Development Philosophy.">
+      <span class="hb-key">4</span>
+      <span class="hb-icon">PH</span>
+      <span>ARCH</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 5: Contact" data-ench="Commissions" data-lore="Press [5] or click to jump to Contact &amp; Discord Station.">
+      <span class="hb-key">5</span>
+      <span class="hb-icon">CT</span>
+      <span>CONTACT</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 6: Atomic" data-ench="Intro Trigger" data-lore="Press [6] or click to replay the I... AM... ATOMIC sequence.">
+      <span class="hb-key">6</span>
+      <span class="hb-icon">AT</span>
+      <span>ATOMIC</span>
+    </div>
+    <div class="hb-slot" onclick="window.open('discord.html', '_blank')" data-tt="Slot 7: Discord" data-ench="Open in New Tab" data-lore="Press [7] or click to open Discord server &amp; bot experiences in a new tab.">
+      <span class="hb-key">7</span>
+      <span class="hb-icon">DC</span>
+      <span>DISCORD</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 8: Theme" data-ench="Cycle Palette" data-lore="Press [8] or click to cycle next dark mode theme.">
+      <span class="hb-key">8</span>
+      <span class="hb-icon">TM</span>
+      <span>THEME</span>
+    </div>
+    <div class="hb-slot" data-tt="Slot 9: Cairo" data-ench="Local Time" data-lore="Press [9] or click to view Cairo time and status.">
+      <span class="hb-key">9</span>
+      <span class="hb-icon">EG</span>
+      <span>CAIRO</span>
+    </div>
+  </nav>
+
+  <!-- FLOATING MINECRAFT TOAST NOTIFICATION -->
+  <div id="mc-toast" role="status" aria-live="polite"></div>
+
+  <!-- Core Application Script -->
+  <script src="main.js"></script>
+</body>
+</html>
