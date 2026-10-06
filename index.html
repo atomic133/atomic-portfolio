@@ -3,25 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ATOMIC — Minecraft Plugin & Network Developer</title>
-  <meta name="description" content="Portfolio of Atomic, a 15-year-old Minecraft developer from Cairo, Egypt specializing in Paper/Spigot plugins, ProtocolLib packet hooks, and Velocity proxy networks." />
+  <title>Atomic 『 The Owner 』 — Gamer • Developer • Shinobi | Minecraft & Discord Dev</title>
+  <meta name="description" content="Official portfolio of Atomic (atomic_odev). Minecraft & Discord Developer. Paper/Spigot plugins, ProtocolLib packet hooks, Velocity networks, and custom bots. “Code. Create. Improve.”" />
 
-  <meta name="theme-color" content="#060509" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23060509'/><polygon points='8,2 14,8 8,14 2,8' fill='%238b5cf6'/><polygon points='8,5 11,8 8,11 5,8' fill='%23c4b5fd'/></svg>" />
+  <meta name="theme-color" content="#05020a" />
+  <link rel="icon" type="image/jpeg" href="atomic-avatar.jpg" />
 
   <!-- Open Graph / SEO Social Tags -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="ATOMIC — Minecraft Plugin &amp; Discord Bot Developer" />
-  <meta property="og:description" content="15 y/o Minecraft &amp; Discord developer from Cairo, Egypt. Paper/Spigot plugins, ProtocolLib packet hooks, Velocity networks, and full-stack Discord bots." />
+  <meta property="og:title" content="Atomic 『 The Owner 』 — Gamer • Developer • Shinobi" />
+  <meta property="og:description" content="Minecraft & Discord Developer. Projects, Bots, Servers, Tools. “Code. Create. Improve.”" />
+  <meta property="og:image" content="atomic-avatar.jpg" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ATOMIC — Minecraft Plugin &amp; Discord Bot Developer" />
+  <meta name="twitter:title" content="Atomic 『 The Owner 』 — Gamer • Developer • Shinobi" />
   <meta name="twitter:description" content="Building plugins, packet hooks, proxy setups, and custom Discord bots." />
 
-  <!-- Google Fonts: Cinzel, Inter, JetBrains Mono, Silkscreen -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Cinzel+Decorative:wght@700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@500;700;900&family=Silkscreen:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 
   <!-- Core Stylesheet -->
   <link rel="stylesheet" href="style.css" />
@@ -72,11 +73,13 @@
   <header class="top-bar">
     <div class="sigil">
       <div class="sigil-gem"></div>
-      <span>ATOMIC // MINECRAFT DEV</span>
+      <span class="font-gothic" style="font-size:18px; letter-spacing:0.06em; color:#fff;">Atomic</span>
+      <span style="color:var(--atomic-core); font-size:11px; margin-left:4px;">// 『 THE OWNER 』 • MINECRAFT DEV</span>
     </div>
 
     <div class="bar-controls">
-      <button class="mode-btn active" data-theme="atomic-violet" onclick="setMode('atomic-violet')" data-tt="Theme: Shadow Violet" data-ench="Default Palette" data-lore="Muted obsidian, dark violet & weathered gold.">1. Shadow Violet</button>
+      <a href="discord.html" class="mode-btn" style="text-decoration:none;" data-tt="Discord Portfolio" data-ench="Profile Card" data-lore="Open the Discord bot & community dossier.">DISCORD PROFILE &rarr;</a>
+      <button class="mode-btn active" data-theme="atomic-violet" onclick="setMode('atomic-violet')" data-tt="Theme: Shinobi Void" data-ench="Electric Violet" data-lore="Obsidian black & neon electric purple.">1. Shinobi Void</button>
       <button class="mode-btn" data-theme="atomic-blue" onclick="setMode('atomic-blue')" data-tt="Theme: Deep Blue" data-ench="Oceanic Slate" data-lore="Dark midnight abyss & atmospheric cyan.">2. Deep Blue</button>
       <button class="mode-btn" data-theme="blood-moon" onclick="setMode('blood-moon')" data-tt="Theme: Blood Moon" data-ench="Crimson Phase" data-lore="Charcoal black & dark wine rose.">3. Blood Moon</button>
       <button class="atomic-ult-btn" onclick="castAtomic()" data-tt="Replay Intro" data-ench="Keybind [3]" data-lore="Trigger the full I... AM... ATOMIC sequence.">I AM ATOMIC</button>
@@ -89,15 +92,42 @@
     <!-- HERO SECTION (2-COLUMN GRID) -->
     <section class="shadow-card tilt-card" aria-label="Developer Profile Hero">
       <div class="card-body hero-layout">
+        
         <!-- Left Column: Biography & Badges -->
         <div>
-          <div class="guild-tag enchanted-glint">
-            <span>MINECRAFT PLUGIN &amp; DISCORD BOT DEVELOPER</span>
+          <div style="display:flex; align-items:center; gap:14px; margin-bottom:12px;">
+            <div style="position:relative; width:54px; height:54px; flex-shrink:0;">
+              <img src="atomic-avatar.jpg" alt="Atomic Avatar" style="width:100%; height:100%; border-radius:50%; object-fit:cover; border:2px solid var(--atomic); box-shadow:0 0 16px rgba(168,85,247,0.5);" />
+              <span class="dc-online-badge" style="width:14px; height:14px; bottom:1px; right:1px;"></span>
+            </div>
+            <div>
+              <div class="guild-tag enchanted-glint" style="margin-bottom:4px;">
+                <span>『 GAMER • DEVELOPER • SHINOBI 』</span>
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--atomic-core);">
+                atomic_odev • ✦ 『 The Owner 』
+              </div>
+            </div>
           </div>
-          <h1 class="hero-title">ATOMIC</h1>
-          <div class="hero-quote">"Building plugins, packet hooks, proxy setups, and Discord bots."</div>
+
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+            <h1 class="hero-title font-gothic glow-purple-text" style="margin-bottom:0; font-size:clamp(42px,6.5vw,66px);">
+              Atomic
+            </h1>
+            <span style="font-size:26px;">👑</span>
+            <span class="dc-verified" style="width:24px; height:24px; font-size:13px; display:inline-flex; align-items:center; justify-content:center; background:#9333ea; border-radius:50%;">✓</span>
+          </div>
+
+          <div class="hero-quote" style="font-size:14.5px; color:var(--atomic-core); margin-bottom:6px;">
+            “Code. Create. Improve.” &lt;/&gt;
+          </div>
+
+          <div style="font-style:italic; font-family:'Cinzel',serif; font-size:12.5px; color:var(--text); margin-bottom:14px; opacity:0.85;">
+            “Not just a user... but the one who makes things work.”
+          </div>
+
           <p class="hero-desc">
-            I'm a 15-year-old developer from <strong>Cairo, Egypt</strong> with <strong>2+ years</strong> of coding experience. I spend most of my time making custom plugins for <strong>Paper and Spigot</strong>, working with packets using <strong>ProtocolLib</strong>, connecting server networks through <strong>Velocity and BungeeCord</strong>, and creating full-featured <strong>Discord bots</strong> for server automation and player account linking.
+            I'm a 15-year-old developer from <strong>Cairo, Egypt</strong> with <strong>2+ years</strong> of dedicated development experience. I build custom, zero-lag plugins for <strong>Paper and Spigot</strong>, intercept packets using <strong>ProtocolLib</strong>, connect high-throughput proxy networks across <strong>Velocity and BungeeCord</strong>, and develop the <strong>HIVO Discord Bot Ecosystem</strong> with automated server defense and account linking.
           </p>
 
           <div class="player-stats-row">
@@ -107,22 +137,41 @@
             <div class="mc-badge enchanted-glint" data-tt="Coding Experience" data-ench="2+ Years Active" data-lore="Writing Java plugins, Kotlin modules, and backend tools since 13.">
               <span>EXP:</span> <span class="gold">2+ YEARS</span>
             </div>
-            <div class="mc-badge enchanted-glint" data-tt="Developer Age" data-ench="15 Years Old" data-lore="High school developer passionate about JVM architectures.">
-              <span>AGE:</span> <span class="gold">15 Y/O</span>
+            <div class="mc-badge enchanted-glint" data-tt="Discord Tag" data-ench="atomic_odev" data-lore="Click to copy Discord handle.">
+              <span>DISCORD:</span> <span class="gold">atomic_odev</span>
+            </div>
+            <div class="mc-badge enchanted-glint" data-tt="Rank" data-ench="Premium Member" data-lore="Member since Jul 19, 2023.">
+              <span>RANK:</span> <span class="gold">👑 PREMIUM</span>
             </div>
           </div>
         </div>
 
-        <!-- Right Column: Live Discord Bot & Telemetry Panel -->
-        <div class="monitor-panel discord-monitor-panel" onclick="window.open('discord.html', '_blank')" data-tt="Discord Experiences" data-ench="Click: Open New Tab" data-lore="Click to open my complete Discord servers &amp; bot engineering portfolio in a new tab.">
+        <!-- Right Column: Live Discord Bot & Telemetry Panel (With Banner & Avatar Preview) -->
+        <div class="monitor-panel discord-monitor-panel" onclick="window.location.href='discord.html'" data-tt="Discord Shinobi Profile" data-ench="Click: View Full Dossier" data-lore="Click to open the complete Discord profile card, bot catalog, and Shinobi dossier.">
           <div class="monitor-header">
             <div style="display:flex; align-items:center; gap:6px;">
               <span class="pulse-dot-discord"></span>
-              <span>DISCORD BOT ENGINE</span>
+              <span>SHINOBI DISCORD DOSSIER</span>
             </div>
-            <span id="gatewayPing" style="color:#5865F2; font-family:'JetBrains Mono',monospace; font-weight:700;">24ms GATEWAY</span>
+            <span id="gatewayPing" style="color:#a855f7; font-family:'JetBrains Mono',monospace; font-weight:700;">24ms GATEWAY</span>
           </div>
+
+          <div style="position:relative; border-radius:8px; overflow:hidden; border:1px solid rgba(168,85,247,0.3); margin-bottom:10px; height:74px;">
+            <img src="atomic-banner.jpg" alt="Banner" style="width:100%; height:100%; object-fit:cover; filter:brightness(0.85);" />
+            <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(7,3,14,0.9) 0%, transparent 70%);"></div>
+            <div style="position:absolute; top:8px; left:12px; font-family:'Cinzel',serif; font-size:10px; color:#e9d5ff; font-style:italic;">
+              “Better Silent Than Fake” 👑
+            </div>
+            <div style="position:absolute; bottom:8px; left:12px; font-family:'Silkscreen',monospace; font-size:11px; color:#fff; display:flex; align-items:center; gap:6px;">
+              <span>⚡ HIVO ECOSYSTEM</span>
+            </div>
+            <div style="position:absolute; top:8px; right:12px; font-weight:700; font-size:14px; color:#c084fc;">
+              最強
+            </div>
+          </div>
+
           <canvas id="discordScope"></canvas>
+
           <div class="live-metrics">
             <div class="metric-cell">
               <div class="metric-num" id="dcMemberCount">14,200+</div>
@@ -137,11 +186,13 @@
               <div class="metric-lbl">BOT UPTIME</div>
             </div>
           </div>
+
           <div class="discord-hero-cta">
-            <span>VIEW DISCORD EXPERIENCES [NEW TAB]</span>
+            <span>OPEN DISCORD PROFILE CARD &rarr;</span>
             <span class="external-arrow">&nearr;</span>
           </div>
         </div>
+
       </div>
     </section>
 

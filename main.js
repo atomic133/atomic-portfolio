@@ -463,8 +463,40 @@
   }
   window.showToast = showToast;
 
+  // Web Audio Synthesizer for cyber sound effects
+  let audioCtx = null;
+  function playAudioTone(freq, duration = 0.08, type = 'sine') {
+    try {
+      if (!audioCtx) {
+        const AudioCtor = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtor) audioCtx = new AudioCtor();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    } catch (e) {}
+  }
+
+  function playChime() {
+    [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => {
+      setTimeout(() => playAudioTone(f, 0.12, 'triangle'), idx * 50);
+    });
+  }
+
   function copyDiscordTag() {
-    const tag = "ATOMIC_oDEV";
+    const tag = "atomic_odev";
+    playAudioTone(880, 0.1, 'sine');
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(tag).then(() => {
         showToast("COPIED DISCORD TAG: " + tag);
@@ -476,6 +508,166 @@
     }
   }
   window.copyDiscordTag = copyDiscordTag;
+
+  // Orbs Balance State
+  let orbsCount = 14000;
+  function addOrbs(e) {
+    if (e && e.stopPropagation) e.stopPropagation();
+    orbsCount += 500;
+    const orbEl = document.getElementById('dcOrbNum');
+    if (orbEl) {
+      orbEl.textContent = orbsCount.toLocaleString();
+    }
+    playChime();
+    showToast("+500 ORBS ADDED! (TOTAL: " + orbsCount.toLocaleString() + ")");
+    
+    // Spawn particle sparks at click location
+    const x = e ? e.clientX : window.innerWidth / 2;
+    const y = e ? e.clientY : window.innerHeight / 2;
+    for (let i = 0; i < 24; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const spd = Math.random() * 5 + 2;
+      createSpark(x, y, Math.cos(angle) * spd, Math.sin(angle) * spd, Math.random() * 4 + 2, 0.9);
+    }
+  }
+  window.addOrbs = addOrbs;
+
+  // Voice Settings Mute Toggle
+  let isVoiceMuted = true;
+  function toggleVoiceMute() {
+    isVoiceMuted = !isVoiceMuted;
+    const label = document.getElementById('voiceLabel');
+    const icon = document.getElementById('voiceIcon');
+    if (isVoiceMuted) {
+      if (label) label.textContent = 'Mute';
+      if (icon) icon.textContent = '🎙️';
+      playAudioTone(300, 0.1, 'sine');
+      showToast("VOICE SETTINGS: MUTED");
+    } else {
+      if (label) label.textContent = 'Active (Unmuted)';
+      if (icon) icon.textContent = '🔊';
+      playAudioTone(640, 0.12, 'triangle');
+      showToast("VOICE SETTINGS: ACTIVE");
+    }
+  }
+  window.toggleVoiceMute = toggleVoiceMute;
+
+  // Discord Tabs Switcher
+  function switchDcTab(tabName, el) {
+    playAudioTone(600, 0.06, 'sine');
+    document.querySelectorAll('.dc-tab').forEach((t) => t.classList.remove('active'));
+    if (el) el.classList.add('active');
+
+    const content = document.getElementById('dcTabContent');
+    if (!content) return;
+
+    if (tabName === 'wishlist') {
+      content.innerHTML = `
+        <div class="dc-module-card" style="font-size:11.5px; color:#d8b4fe; line-height:1.5;">
+          <strong>Shinobi Dev Roadmap &amp; Wishlist</strong>
+        </div>
+        <div class="dc-module-card" style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11px; color:#fff;">⚡ Custom Spigot Packet Core v2</span>
+          <span style="font-size:9.5px; background:rgba(88,28,135,0.7); padding:2px 6px; border-radius:4px; color:#c084fc;">IN PROGRESS</span>
+        </div>
+        <div class="dc-module-card" style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11px; color:#fff;">🛡️ HIVO Zero-Trust Webhook Gateway</span>
+          <span style="font-size:9.5px; background:rgba(88,28,135,0.7); padding:2px 6px; border-radius:4px; color:#c084fc;">ACTIVE</span>
+        </div>
+        <div class="dc-module-card" style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11px; color:#fff;">🖥️ Dedicated Ryzen 9 Server Node</span>
+          <span style="font-size:9.5px; background:rgba(88,28,135,0.7); padding:2px 6px; border-radius:4px; color:#c084fc;">ACQUIRING</span>
+        </div>
+        <div class="dc-module-card" style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11px; color:#fff;">👑 Cross-Network Spigot Sync Engine</span>
+          <span style="font-size:9.5px; background:rgba(88,28,135,0.7); padding:2px 6px; border-radius:4px; color:#c084fc;">PLANNED</span>
+        </div>
+      `;
+    } else {
+      content.innerHTML = `
+        <!-- Orbs Balance -->
+        <div class="dc-module-card dc-orbs-row">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:16px;">🔮</span>
+            <div>
+              <div style="font-size:12px; font-weight:600; color:#fff;">Orbs Balance</div>
+              <div style="font-size:10px; color:#a8a29e;">Shinobi Currency</div>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div class="dc-orbs-val" id="dcOrbCounter">
+              <span style="color:#c084fc;">✦</span>
+              <span id="dcOrbNum">${orbsCount.toLocaleString()}</span>
+            </div>
+            <button class="dc-orb-plus-btn" onclick="addOrbs(event)" title="Add Orbs">+</button>
+          </div>
+        </div>
+
+        <!-- Voice Settings -->
+        <div class="dc-module-card dc-voice-row" onclick="toggleVoiceMute()">
+          <div>
+            <div style="font-size:10.5px; color:#a8a29e;">Voice Settings</div>
+            <div style="font-size:12px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px; margin-top:2px;">
+              <span id="voiceIcon">${isVoiceMuted ? '🎙️' : '🔊'}</span>
+              <span id="voiceLabel">${isVoiceMuted ? 'Mute' : 'Active (Unmuted)'}</span>
+            </div>
+          </div>
+          <div style="color:#a855f7; font-size:14px;">›</div>
+        </div>
+
+        <!-- Bio Box -->
+        <div class="dc-bio-box">
+          <div style="font-size:11px; font-weight:700; color:#c084fc; margin-bottom:4px; display:flex; align-items:center; gap:4px;">
+            <span>⚡</span> <span>Bio</span>
+          </div>
+
+          <div class="dc-bio-tagline">
+            『 GAMER • DEVELOPER • SHINOBI 』
+          </div>
+
+          <div class="dc-bio-motto">
+            “Code. Create. Improve.” &lt;/&gt;
+          </div>
+
+          <div class="dc-bio-items">
+            <div>✦ Discord: <code style="background:rgba(88,28,135,0.4); padding:1px 5px; border-radius:4px; color:#fff;">atomic_odev</code></div>
+            <div>🔗 Minecraft / Discord Dev</div>
+            <div>👑 Projects • Bots • Servers • Tools</div>
+          </div>
+
+          <div class="dc-crown-divider">
+            <span>👑</span>
+          </div>
+
+          <div class="dc-quote">
+            “Not just a user...<br />
+            but the one who makes things work.”
+          </div>
+
+          <div class="dc-signature">
+            —— Atomic ♡
+          </div>
+        </div>
+
+        <!-- Member Since & Premium Member -->
+        <div class="dc-member-row">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:14px;">📅</span>
+            <div>
+              <div style="font-size:10px; color:#a8a29e;">Member Since</div>
+              <div style="font-size:12px; font-weight:700; color:#fff;">Jul 19, 2023</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(88,28,135,0.6); border:1px solid rgba(168,85,247,0.5); padding:4px 10px; border-radius:8px; font-size:10.5px; font-weight:700; color:#f3e8ff;">
+            👑 Premium Member
+          </div>
+        </div>
+      `;
+    }
+  }
+  window.switchDcTab = switchDcTab;
 
   function copyEmail() {
     const email = "atomicstore7717@gmail.com";

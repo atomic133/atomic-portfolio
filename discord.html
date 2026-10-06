@@ -3,25 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ATOMIC — Discord Bot & Community Server Architect</title>
-  <meta name="description" content="Portfolio of Atomic's Discord development experiences, custom bots (discord.py, discord.js, JDA), and server architecture for Minecraft communities." />
+  <title>Atomic 『 The Owner 』 — Gamer • Developer • Shinobi | Discord Dev</title>
+  <meta name="description" content="Official portfolio of Atomic (atomic_odev). Gamer • Developer • Shinobi. Minecraft & Discord Developer. Projects, Bots, Servers, Tools. “Code. Create. Improve.”" />
 
-  <meta name="theme-color" content="#060509" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%23060509'/><polygon points='8,2 14,8 8,14 2,8' fill='%238b5cf6'/><polygon points='8,5 11,8 8,11 5,8' fill='%23c4b5fd'/></svg>" />
+  <meta name="theme-color" content="#05020a" />
+  <link rel="icon" type="image/jpeg" href="atomic-avatar.jpg" />
 
   <!-- Open Graph / SEO Social Tags -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="ATOMIC — Discord Bot &amp; Community Server Architect" />
-  <meta property="og:description" content="Custom Discord bots (discord.py, discord.js, JDA 5), Minecraft server bridges, and hardened community setups." />
+  <meta property="og:title" content="Atomic 『 The Owner 』 — Gamer • Developer • Shinobi" />
+  <meta property="og:description" content="Minecraft & Discord Developer. Projects, Bots, Servers, Tools. “Code. Create. Improve.”" />
+  <meta property="og:image" content="atomic-avatar.jpg" />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ATOMIC — Discord Bot &amp; Community Server Architect" />
-  <meta name="twitter:description" content="Custom bots, server infrastructure, and Minecraft integrations." />
+  <meta name="twitter:title" content="Atomic 『 The Owner 』 — Gamer • Developer • Shinobi" />
+  <meta name="twitter:description" content="Minecraft & Discord Developer. Projects, Bots, Servers, Tools." />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Cinzel+Decorative:wght@700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@500;700;900&family=Silkscreen:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -70,12 +71,13 @@
   <header class="top-bar">
     <div class="sigil">
       <div class="sigil-gem"></div>
-      <span>ATOMIC // DISCORD EXPERIENCES</span>
+      <span class="font-gothic" style="font-size:18px; letter-spacing:0.06em; color:#fff;">Atomic</span>
+      <span style="color:var(--atomic-core); font-size:11px; margin-left:4px;">// 『 THE OWNER 』</span>
     </div>
 
     <div class="bar-controls">
       <a href="index.html" class="mode-btn" style="text-decoration:none;" data-tt="Main Portfolio" data-ench="Navigation" data-lore="Return to Minecraft developer portfolio.">&larr; MAIN PORTFOLIO</a>
-      <button class="mode-btn active" data-theme="atomic-violet" onclick="setMode('atomic-violet')" data-tt="Theme: Shadow Violet" data-ench="Default Palette" data-lore="Muted obsidian, dark violet & weathered gold.">1. Shadow Violet</button>
+      <button class="mode-btn active" data-theme="atomic-violet" onclick="setMode('atomic-violet')" data-tt="Theme: Shinobi Void" data-ench="Electric Violet" data-lore="Obsidian black & neon electric purple.">1. Shinobi Void</button>
       <button class="mode-btn" data-theme="atomic-blue" onclick="setMode('atomic-blue')" data-tt="Theme: Deep Blue" data-ench="Oceanic Slate" data-lore="Dark midnight abyss & atmospheric cyan.">2. Deep Blue</button>
       <button class="mode-btn" data-theme="blood-moon" onclick="setMode('blood-moon')" data-tt="Theme: Blood Moon" data-ench="Crimson Phase" data-lore="Charcoal black & dark wine rose.">3. Blood Moon</button>
       <button class="atomic-ult-btn" onclick="castAtomic()" data-tt="Replay Intro" data-ench="Keybind [6]" data-lore="Trigger the full I... AM... ATOMIC sequence.">I AM ATOMIC</button>
@@ -85,20 +87,45 @@
   <!-- 5. MAIN CONTENT CONTAINER -->
   <main class="container">
 
-    <!-- HERO SECTION: DISCORD ARCHITECT OVERVIEW -->
+    <!-- HERO SECTION: DISCORD ARCHITECT OVERVIEW & PROFILE CARD -->
     <section class="shadow-card tilt-card" aria-label="Discord Architect Hero">
-      <div class="card-body hero-layout">
+      <div class="card-body hero-layout" style="align-items:flex-start;">
+        
+        <!-- Left Column: Bio, Slogan, and Stats -->
         <div>
           <div class="guild-tag enchanted-glint">
-            <span>DISCORD BOT &amp; COMMUNITY ARCHITECT</span>
+            <span>『 GAMER • DEVELOPER • SHINOBI 』</span>
           </div>
-          <h1 class="hero-title">DISCORD DEV</h1>
-          <div class="hero-quote">"Custom bots, server infrastructure, and Minecraft integrations."</div>
+
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px; flex-wrap:wrap;">
+            <h1 class="hero-title font-gothic glow-purple-text" style="margin-bottom:0; font-size:clamp(40px,6.5vw,66px);">
+              Atomic
+            </h1>
+            <span style="font-size:26px;">👑</span>
+            <span class="dc-verified" style="width:24px; height:24px; font-size:13px;">✓</span>
+            <span class="dc-hivo-badge" style="font-size:11px; padding:3px 10px;">⚡ HIVO</span>
+          </div>
+
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--atomic-core); margin-bottom:12px;">
+            atomic_odev • ✦ 『 The Owner 』 • ───
+          </div>
+
+          <div class="hero-quote" style="font-size:15px; color:var(--atomic-core); margin-bottom:6px;">
+            “Code. Create. Improve.” &lt;/&gt;
+          </div>
+
+          <div style="font-style:italic; font-family:'Cinzel',serif; font-size:13px; color:var(--text); margin-bottom:16px; opacity:0.9;">
+            “Not just a user... but the one who makes things work.”
+          </div>
+
           <p class="hero-desc">
-            Over the past <strong>2+ years</strong>, I've engineered Discord bots and designed full server architectures for Minecraft networks and gaming communities. From <strong>zero-delay two-way in-game chat relays</strong> and <strong>secure account verification</strong> to <strong>automated ticket transcripts</strong> and <strong>anti-nuke security</strong>, I build bots that stay online 24/7 without memory leaks.
+            Over the past <strong>2+ years</strong>, I've engineered Discord bots, verification architectures, and backend server infrastructure for high-traffic Minecraft networks and gaming hubs. Specializing in <strong>HIVO Ecosystem tooling</strong>, <strong>zero-delay JDA &amp; Discord.js chat relays</strong>, <strong>anti-nuke server hardening</strong>, and automated ticket workflows.
           </p>
 
           <div class="player-stats-row">
+            <div class="mc-badge enchanted-glint" data-tt="Discord Tag" data-ench="atomic_odev" data-lore="Click to copy Discord handle.">
+              <span>DISCORD:</span> <span class="gold">atomic_odev</span>
+            </div>
             <div class="mc-badge enchanted-glint" data-tt="Communities Built" data-ench="18+ Discord Servers" data-lore="Full permissions, categories, channel setups, and onboarding.">
               <span>SERVERS:</span> <span class="gold">18+ CONFIGURED</span>
             </div>
@@ -108,38 +135,195 @@
             <div class="mc-badge enchanted-glint" data-tt="Bot Stacks" data-ench="4 Main Languages" data-lore="Python (discord.py), JS (discord.js), Java (JDA), Kotlin (Kord).">
               <span>STACKS:</span> <span class="gold">PYTHON / JS / JDA</span>
             </div>
+            <div class="mc-badge enchanted-glint" data-tt="Rank" data-ench="Premium Member" data-lore="Member since Jul 19, 2023.">
+              <span>RANK:</span> <span class="gold">👑 PREMIUM</span>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+            <button class="dc-action-btn" onclick="copyDiscordTag()" style="width:auto; margin:0; padding:10px 18px; font-size:12px; cursor:pointer;">
+              <span>📋 COPY DISCORD (atomic_odev)</span>
+            </button>
+            <a href="#sec-bots" class="proj-btn" style="text-decoration:none; padding:10px 18px; font-size:11px; display:inline-flex; align-items:center;">
+              <span>EXPLORE BOTS ↓</span>
+            </a>
           </div>
         </div>
 
-        <!-- Right Column: Live Discord Bot Telemetry -->
-        <div class="monitor-panel discord-monitor-panel" data-tt="Live Discord Gateway" data-ench="WebSocket v10" data-lore="Real-time heartbeat ping and gateway telemetry simulation.">
-          <div class="monitor-header">
-            <div style="display:flex; align-items:center; gap:6px;">
-              <span class="pulse-dot-discord"></span>
-              <span>GATEWAY HEARTBEAT</span>
+        <!-- Right Column: Interactive Discord Mobile Profile Card Replica -->
+        <div>
+          <div class="discord-card-widget" id="discordProfileCard">
+            
+            <!-- Banner with Saikyou & Slogan -->
+            <div class="dc-banner">
+              <img src="atomic-banner.jpg" alt="Atomic Shinobi Banner" class="dc-banner-img" />
+              <div class="dc-banner-overlay"></div>
+
+              <!-- Banner Hand-Written Text (Left) -->
+              <div class="dc-banner-quote-left">
+                <div>Better</div>
+                <div>Silent</div>
+                <div>Than 👑</div>
+                <div>Fake</div>
+              </div>
+
+              <!-- Banner Kanji (Right) -->
+              <div class="dc-banner-kanji-right">
+                最強
+              </div>
+
+              <!-- Status Bubble -->
+              <div class="dc-status-bubble">
+                <span style="color:#c084fc;">✦</span>
+                <span>Favorite anime lately?</span>
+              </div>
             </div>
-            <span id="gatewayPing" style="color:#5865F2; font-family:'JetBrains Mono',monospace; font-weight:700;">24ms PING</span>
-          </div>
-          <canvas id="discordScope"></canvas>
-          <div class="live-metrics">
-            <div class="metric-cell">
-              <div class="metric-num">99.98%</div>
-              <div class="metric-lbl">BOT UPTIME</div>
+
+            <!-- Avatar Row -->
+            <div class="dc-avatar-row">
+              <div class="dc-avatar-wrap">
+                <img src="atomic-avatar.jpg" alt="Atomic Avatar" class="dc-avatar-img" />
+                <span class="dc-online-badge"></span>
+              </div>
             </div>
-            <div class="metric-cell">
-              <div class="metric-num">4 STACKS</div>
-              <div class="metric-lbl">FRAMEWORKS</div>
+
+            <!-- Identity Row -->
+            <div class="dc-identity">
+              <div class="dc-name-row">
+                <span class="dc-name font-gothic">Atomic</span>
+                <span class="dc-crown">👑</span>
+                <span class="dc-verified">✓</span>
+              </div>
+
+              <div class="dc-handle-row">
+                <span style="font-family:'JetBrains Mono',monospace; color:#fff;">atomic_odev</span>
+                <span>•</span>
+                <span class="font-gothic" style="font-size:14px; color:#d8b4fe;">『 The Owner 』</span>
+                <span>•</span>
+                <span>───</span>
+                <span class="dc-hivo-badge">⚡ HIVO</span>
+              </div>
             </div>
-            <div class="metric-cell">
-              <div class="metric-num">&lt; 0.05s</div>
-              <div class="metric-lbl">RELAY DELAY</div>
+
+            <!-- Copy Action Button -->
+            <button class="dc-action-btn" onclick="copyDiscordTag()" style="cursor:pointer;">
+              <span>✏️ Copy Tag / Connect</span>
+            </button>
+
+            <!-- Tabs -->
+            <div class="dc-tabs">
+              <button class="dc-tab active" onclick="switchDcTab('main', this)">Main</button>
+              <button class="dc-tab" onclick="switchDcTab('wishlist', this)">Wishlist</button>
             </div>
-          </div>
-          <div class="discord-hero-cta" onclick="copyDiscordTag()">
-            <span>COPY DISCORD TAG: ATOMIC_oDEV</span>
-            <span class="external-arrow">&rarr;</span>
+
+            <!-- Modules List -->
+            <div class="dc-body-modules" id="dcTabContent">
+              
+              <!-- Orbs Balance -->
+              <div class="dc-module-card dc-orbs-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:16px;">🔮</span>
+                  <div>
+                    <div style="font-size:12px; font-weight:600; color:#fff;">Orbs Balance</div>
+                    <div style="font-size:10px; color:#a8a29e;">Shinobi Currency</div>
+                  </div>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div class="dc-orbs-val" id="dcOrbCounter">
+                    <span style="color:#c084fc;">✦</span>
+                    <span id="dcOrbNum">14,000</span>
+                  </div>
+                  <button class="dc-orb-plus-btn" onclick="addOrbs(event)" title="Add Orbs">+</button>
+                </div>
+              </div>
+
+              <!-- Voice Settings -->
+              <div class="dc-module-card dc-voice-row" onclick="toggleVoiceMute()">
+                <div>
+                  <div style="font-size:10.5px; color:#a8a29e;">Voice Settings</div>
+                  <div style="font-size:12px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px; margin-top:2px;">
+                    <span id="voiceIcon">🎙️</span>
+                    <span id="voiceLabel">Mute</span>
+                  </div>
+                </div>
+                <div style="color:#a855f7; font-size:14px;">›</div>
+              </div>
+
+              <!-- Bio Box -->
+              <div class="dc-bio-box">
+                <div style="font-size:11px; font-weight:700; color:#c084fc; margin-bottom:4px; display:flex; align-items:center; gap:4px;">
+                  <span>⚡</span> <span>Bio</span>
+                </div>
+
+                <div class="dc-bio-tagline">
+                  『 GAMER • DEVELOPER • SHINOBI 』
+                </div>
+
+                <div class="dc-bio-motto">
+                  “Code. Create. Improve.” &lt;/&gt;
+                </div>
+
+                <div class="dc-bio-items">
+                  <div>✦ Discord: <code style="background:rgba(88,28,135,0.4); padding:1px 5px; border-radius:4px; color:#fff;">atomic_odev</code></div>
+                  <div>🔗 Minecraft / Discord Dev</div>
+                  <div>👑 Projects • Bots • Servers • Tools</div>
+                </div>
+
+                <div class="dc-crown-divider">
+                  <span>👑</span>
+                </div>
+
+                <div class="dc-quote">
+                  “Not just a user...<br />
+                  but the one who makes things work.”
+                </div>
+
+                <div class="dc-signature">
+                  —— Atomic ♡
+                </div>
+              </div>
+
+              <!-- Member Since & Premium Member -->
+              <div class="dc-member-row">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-size:14px;">📅</span>
+                  <div>
+                    <div style="font-size:10px; color:#a8a29e;">Member Since</div>
+                    <div style="font-size:12px; font-weight:700; color:#fff;">Jul 19, 2023</div>
+                  </div>
+                </div>
+
+                <div style="background:rgba(88,28,135,0.6); border:1px solid rgba(168,85,247,0.5); padding:4px 10px; border-radius:8px; font-size:10.5px; font-weight:700; color:#f3e8ff;">
+                  👑 Premium Member
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Bottom Action Navigation -->
+            <div class="dc-bottom-bar">
+              <button class="dc-nav-item active" onclick="showToast('QUESTS: SHINOBI DEV MILESTONES')">
+                <span>🧭</span>
+                <span>Quests</span>
+              </button>
+              <button class="dc-nav-item" onclick="window.location.href='index.html'">
+                <span>🛍️</span>
+                <span>Shop/MC</span>
+              </button>
+              <button class="dc-nav-item" onclick="addOrbs(event)">
+                <span>⚡</span>
+                <span>Nitro</span>
+              </button>
+              <button class="dc-nav-item" onclick="toggleVoiceMute()">
+                <span>⚙️</span>
+                <span>Settings</span>
+              </button>
+            </div>
+
           </div>
         </div>
+
       </div>
     </section>
 
@@ -151,6 +335,39 @@
     </div>
 
     <div class="projects-grid">
+      <!-- Flagship Bot: HIVO Security & Ecosystem -->
+      <article class="shadow-card tilt-card" aria-label="HIVO Ecosystem Bot">
+        <div class="card-body project-card" style="border:1px solid rgba(168,85,247,0.4);">
+          <div>
+            <div class="project-head">
+              <h3 class="project-name font-gothic" style="font-size:24px; color:#fff;">HIVO Ecosystem</h3>
+              <span class="project-tag" style="background:rgba(88,28,135,0.7); border-color:#a855f7; color:#f3e8ff;">⚡ FLAGSHIP SUITE</span>
+            </div>
+            <p class="project-desc">
+              Community automation and security framework engineered for high-concurrency servers. Features real-time anti-raid tripwires, custom OAuth2 verification, automated ticketing, dynamic role synchronizers, and sub-25ms response latency.
+            </p>
+            <div class="project-metrics-box">
+              <span>SUB-25MS GATEWAY RESPONSE</span>
+              <span>45,000+ USERS MONITORED</span>
+              <span>TYPESCRIPT + DISCORD.JS V14</span>
+            </div>
+            <div class="project-tags-row">
+              <span class="mini-badge">DISCORD.JS</span>
+              <span class="mini-badge">TYPESCRIPT</span>
+              <span class="mini-badge">REDIS PUB/SUB</span>
+              <span class="mini-badge">ANTI-RAID</span>
+              <span class="mini-badge">POSTGRESQL</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span style="font-family:'Silkscreen',monospace; font-size:9px; color:#a855f7;">STATUS: PRIMARY CORE</span>
+            <button class="proj-btn" onclick="showToast('HIVO: COMMUNITY DEFENSE & AUTOMATION CORE')" data-tt="HIVO Bot" data-ench="Core Architecture" data-lore="Serving high-traffic communities with custom permission pipelines.">
+              <span>VIEW SPECS</span>
+            </button>
+          </div>
+        </div>
+      </article>
+
       <!-- Bot 1: AegisLink -->
       <article class="shadow-card tilt-card" aria-label="AegisLink Bot">
         <div class="card-body project-card">
